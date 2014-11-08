@@ -1,0 +1,70 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+
+
+
+// line 108 "gameplotconcrete.ump"
+public class BlackCircle
+{
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //BlackCircle Attributes
+  private int size;
+  private String colour;
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public BlackCircle(int aSize, String aColour)
+  {
+    size = aSize;
+    colour = aColour;
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public boolean setSize(int aSize)
+  {
+    boolean wasSet = false;
+    size = aSize;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setColour(String aColour)
+  {
+    boolean wasSet = false;
+    colour = aColour;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public int getSize()
+  {
+    return size;
+  }
+
+  public String getColour()
+  {
+    return colour;
+  }
+
+  public void delete()
+  {}
+
+
+  public String toString()
+  {
+	  String outputString = "";
+    return super.toString() + "["+
+            "size" + ":" + getSize()+ "," +
+            "colour" + ":" + getColour()+ "]"
+     + outputString;
+  }
+}

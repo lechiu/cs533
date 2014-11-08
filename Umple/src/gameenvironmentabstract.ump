@@ -1,0 +1,34 @@
+class Scene
+{
+	1 scenes -> * NonPlayerCharacter nonPlayerCharacters;
+	1 scenes -> 1 Terrain terrains;
+	1 scenes -> * Entity entities;
+	1 scenes -> * ActivityArea activityAreas;
+	1 scened -> * Solidity solidities;
+}
+
+class NonPlayerCharacter
+{
+	name;
+	description;
+}
+
+class Terrain
+{
+	type;
+}
+
+class Entity
+{
+	description;
+}
+
+class ActivityArea
+{
+	description;
+}
+
+class Solidity
+{
+	description;
+}

@@ -1,0 +1,75 @@
+class Scene
+{
+	1 scenes -> * NonPlayerCharacter nonPlayerCharacters;
+	1 scenes -> 1 Terrain terrains;
+	1 scenes -> * Entity entities;
+	1 scenes -> * ActivityArea activityAreas;
+	1 scenes -> * Solidity solidities;
+	1 scenes -> 1..* Image images;
+}
+
+class NonPlayerCharacter
+{
+	1 nonPlayerCharacter -> 1 VisualObject visualObject;
+	name;
+	description;
+}
+
+class Terrain
+{
+	1 terrain -> 1 VisualObject visualObject;
+	type;
+}
+
+class Entity
+{
+	1 entity -> 1 VisualObject visualObject;
+	description;
+}
+
+class ActivityArea
+{
+	1 activityArea -> 1 VisualObject visualObject;
+	description;
+}
+
+class Solidity
+{
+	1 solidity -> 1 VisualObject visualObject;
+	description;
+}
+
+class VisualObject
+{
+	1 visualObjects -> * Polygon polygons;
+	1 visualObjects -> * Label labels;		
+}
+
+class Polygon
+{
+	1 polygon -> 1 Vertex vertices;
+	texture;
+}
+
+class Label
+{
+	1 labels -> 1 Vertex vertices;
+	content;
+	reference;
+	Boolean isVisible = false;
+	Integer xPosition;
+	Integer yPosition;
+}
+
+class Vertex
+{
+	Integer x;
+	Integer y;
+}
+
+class Image
+{
+	1 images -> 1 Vertex vertices;
+	Integer rotation;
+	Boolean isVisible = false;
+}

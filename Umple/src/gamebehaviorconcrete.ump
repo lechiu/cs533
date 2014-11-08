@@ -1,0 +1,105 @@
+class AccessPower
+{
+	0..1 accessPower -> 1 State states;
+}
+
+class State
+{
+  	1 states -> * Behavior behaviors;
+  	0..1 states -> * Ellipse ellipses;
+  	0..1 from-> * Transition out;
+  	0..1 to-> * Transition in;
+  	label;
+  	description;
+}
+
+class Behavior
+{
+	1 behaviors -> * Restriction restrictions;
+	0..1 behaviors -> 0..1 Rectangle rectangles;
+}
+
+class Restriction
+{
+	0..1 restrictions -> * Diamond diamonds;
+	description;
+}
+
+class Transition
+{
+	1 -> 1 Condition;
+	0..1 transitions -> * Arrow arrows;
+	unique transitionId;
+}
+
+
+class Condition
+{
+	unique conditionId;
+	expression;
+}
+
+class Line
+{
+	1 lines -> 2..* Node nodes;
+}
+
+class Node
+{
+	isA Position;
+}
+
+class Arrow
+{
+	0..1 arrows -> * Label labels;
+	isA Line;
+}
+
+class Position
+{
+	Integer x;
+	Integer y;
+}
+class Label
+{
+	
+	isA Position;
+	content;
+}
+
+class SolidLine
+{
+	isA Line;
+}
+
+class Ellipse
+{
+	isA LinkableShape;
+	0..1 ellipses -> * SolidLine solidLines;
+}
+
+class LinkableShape
+{
+	isA Position;
+	Integer length;
+	Integer width;
+	Integer height;
+}
+
+class Rectangle
+{
+	isA LinkableShape;
+	0..1 rectangles -> * SolidLine solidLines;
+	0..1 rectangle -> * DottedLine dottedLines;	
+}
+
+class DottedLine
+{
+	isA Line;
+}
+
+class Diamond
+{
+	isA LinkableShape;
+	0..1 diamonds -> * DottedLine dottedLines;
+}

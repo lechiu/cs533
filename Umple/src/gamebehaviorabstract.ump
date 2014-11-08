@@ -1,0 +1,36 @@
+class AccessPower
+{
+0..1 accessPower -> 1 State states;
+}
+
+class State
+{
+  1 states -> * Behavior behaviors;
+  0..1 from-> * Transition out;
+  0..1 to-> * Transition in;
+  label;
+  description;
+}
+
+class Behavior
+{
+  1 behaviors -> * Restriction restrictions;
+}
+
+class Restriction
+{
+description;
+}
+
+class Transition
+{
+1 -> 1 Condition;
+unique transitionId;
+}
+
+
+class Condition
+{
+unique conditionId;
+expression;
+}
