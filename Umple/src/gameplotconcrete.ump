@@ -1,5 +1,6 @@
 class StartPoint
 {
+	depend java.util.*;
 	0..1 startPoint -> 0..1 Condition precondition;
 	1 startPoint -- * InBinding inBindings;
     1 startPoint -> 1 OvalShape;
@@ -57,6 +58,7 @@ class OpenEndPoint
 
 class Mission
 {
+	depend java.util.*;
 	isA StoryLineNode;
 	1 Mission -> * Binding bindings;
 	1 Mission -> 1 ReturnPoint returnPoint;
@@ -72,6 +74,7 @@ class ReturnPoint
 
 class Trigger
 {
+	depend java.util.*;
 	1 trigger -> 1 Mission mission;
 	1 -> 1 BlackTriangle;
 	isA StoryLineNode;
@@ -90,6 +93,7 @@ class ChoicePoinJoin
 
 class MissionTask
 {
+	depend java.util.*;
 	1 MissionTask -> 1 XSymbol;
 	isA StoryLineNode;
 }
@@ -189,6 +193,9 @@ class Shape
 }
 
 class RoundRectShape{
+	depend java.awt.Color;
+	depend java.awt.Graphics;
+	
 	isA Shape;
 	void draw(Graphics g) {
 		g.setColor(Color.black);
