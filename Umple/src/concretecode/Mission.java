@@ -5,7 +5,7 @@ package concretecode;
 
 import java.util.*;
 
-// line 47 "gameplotconcrete.ump"
+// line 58 "gameplotconcrete.ump"
 public class Mission extends StoryLineNode
 {
 
@@ -20,45 +20,26 @@ public class Mission extends StoryLineNode
   //Mission Associations
   private List<Binding> bindings;
   private ReturnPoint returnPoint;
-  private RoundRectShape roundRectShape;
-  private Trigger trigger;
+  private Shape shape;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Mission(Position aPosition, String aDescription, ReturnPoint aReturnPoint, RoundRectShape aRoundRectShape, Trigger aTrigger)
+  public Mission(Position aPosition, ReturnPoint aReturnPoint, Shape aShape)
   {
     super(aPosition);
-    description = aDescription;
+    description = "";
     isDynamic = false;
     bindings = new ArrayList<Binding>();
-    if (aReturnPoint == null || aReturnPoint.getMission() != null)
+    if (!setReturnPoint(aReturnPoint))
     {
       throw new RuntimeException("Unable to create Mission due to aReturnPoint");
     }
-    returnPoint = aReturnPoint;
-    if (aRoundRectShape == null || aRoundRectShape.getMission() != null)
+    if (!setShape(aShape))
     {
-      throw new RuntimeException("Unable to create Mission due to aRoundRectShape");
+      throw new RuntimeException("Unable to create Mission due to aShape");
     }
-    roundRectShape = aRoundRectShape;
-    if (aTrigger == null || aTrigger.getMission() != null)
-    {
-      throw new RuntimeException("Unable to create Mission due to aTrigger");
-    }
-    trigger = aTrigger;
-  }
-
-  public Mission(Position aPosition, String aDescription, Position aPositionForReturnPoint, int aSizeForRoundRectShape, Position aPositionForTrigger, BlackTriangle aBlackTriangleForTrigger)
-  {
-    super(aPosition);
-    description = aDescription;
-    isDynamic = false;
-    bindings = new ArrayList<Binding>();
-    returnPoint = new ReturnPoint(aPositionForReturnPoint, this);
-    roundRectShape = new RoundRectShape(aSizeForRoundRectShape, this);
-    trigger = new Trigger(aPositionForTrigger, this, aBlackTriangleForTrigger);
   }
 
   //------------------------
@@ -131,14 +112,9 @@ public class Mission extends StoryLineNode
     return returnPoint;
   }
 
-  public RoundRectShape getRoundRectShape()
+  public Shape getShape()
   {
-    return roundRectShape;
-  }
-
-  public Trigger getTrigger()
-  {
-    return trigger;
+    return shape;
   }
 
   public static int minimumNumberOfBindings()
@@ -198,27 +174,33 @@ public class Mission extends StoryLineNode
     return wasAdded;
   }
 
+  public boolean setReturnPoint(ReturnPoint aNewReturnPoint)
+  {
+    boolean wasSet = false;
+    if (aNewReturnPoint != null)
+    {
+      returnPoint = aNewReturnPoint;
+      wasSet = true;
+    }
+    return wasSet;
+  }
+
+  public boolean setShape(Shape aNewShape)
+  {
+    boolean wasSet = false;
+    if (aNewShape != null)
+    {
+      shape = aNewShape;
+      wasSet = true;
+    }
+    return wasSet;
+  }
+
   public void delete()
   {
     bindings.clear();
-    ReturnPoint existingReturnPoint = returnPoint;
     returnPoint = null;
-    if (existingReturnPoint != null)
-    {
-      existingReturnPoint.delete();
-    }
-    RoundRectShape existingRoundRectShape = roundRectShape;
-    roundRectShape = null;
-    if (existingRoundRectShape != null)
-    {
-      existingRoundRectShape.delete();
-    }
-    Trigger existingTrigger = trigger;
-    trigger = null;
-    if (existingTrigger != null)
-    {
-      existingTrigger.delete();
-    }
+    shape = null;
     super.delete();
   }
 
@@ -230,8 +212,7 @@ public class Mission extends StoryLineNode
             "description" + ":" + getDescription()+ "," +
             "isDynamic" + ":" + getIsDynamic()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "returnPoint = "+(getReturnPoint()!=null?Integer.toHexString(System.identityHashCode(getReturnPoint())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "roundRectShape = "+(getRoundRectShape()!=null?Integer.toHexString(System.identityHashCode(getRoundRectShape())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "trigger = "+(getTrigger()!=null?Integer.toHexString(System.identityHashCode(getTrigger())):"null")
+            "  " + "shape = "+(getShape()!=null?Integer.toHexString(System.identityHashCode(getShape())):"null")
      + outputString;
   }
 }

@@ -1,0 +1,39 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+
+
+
+// line 119 "gameplotconcrete.ump"
+public class OvalShape extends Shape
+{
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public OvalShape(int aLeft, int aTop, int aWidth, int aHeight)
+  {
+    super(aLeft, aTop, aWidth, aHeight);
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public void delete()
+  {
+    super.delete();
+  }
+
+  // line 123 "gameplotconcrete.ump"
+  public void draw(Graphics g){
+    g.setColor(Color.black);
+		g.fillOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+		g.drawOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+  }
+
+}

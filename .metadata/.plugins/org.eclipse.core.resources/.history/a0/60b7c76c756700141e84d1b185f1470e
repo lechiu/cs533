@@ -1,0 +1,49 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+
+
+
+// line 163 "gameplotconcrete.ump"
+public class RoundRectShape extends Shape
+{
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public RoundRectShape(int aLeft, int aTop, int aWidth, int aHeight)
+  {
+    super(aLeft, aTop, aWidth, aHeight);
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public void delete()
+  {
+    super.delete();
+  }
+  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 165 gameplotconcrete.ump
+  @Override
+	void draw(Graphics g) 
+  	{
+		g.setColor(Color.black);
+		g.drawRoundRect(left,top,width,height,width/3,height/3);
+		g.drawString("M", left, top);
+  }
+
+  
+}

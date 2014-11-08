@@ -1,0 +1,57 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+
+
+
+// line 129 "gameplotconcrete.ump"
+public class RoundRectShape extends Shape
+{
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //RoundRectShape Associations
+  private Mission mission;
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public RoundRectShape(int aLeft, int aTop, int aWidth, int aHeight, Mission aMission)
+  {
+    super(aLeft, aTop, aWidth, aHeight);
+    if (aMission == null || aMission.getRoundRectShape() != null)
+    {
+      throw new RuntimeException("Unable to create RoundRectShape due to aMission");
+    }
+    mission = aMission;
+  }
+
+  public RoundRectShape(int aLeft, int aTop, int aWidth, int aHeight, Position aPositionForMission, String aDescriptionForMission, ReturnPoint aReturnPointForMission, Trigger aTriggerForMission)
+  {
+    super(aLeft, aTop, aWidth, aHeight);
+    mission = new Mission(aPositionForMission, aDescriptionForMission, aReturnPointForMission, this, aTriggerForMission);
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public Mission getMission()
+  {
+    return mission;
+  }
+
+  public void delete()
+  {
+    Mission existingMission = mission;
+    mission = null;
+    if (existingMission != null)
+    {
+      existingMission.delete();
+    }
+    super.delete();
+  }
+
+}

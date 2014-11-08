@@ -1,0 +1,81 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+
+
+import java.util.*;
+
+// line 62 "gameplotconcrete.ump"
+public class Trigger extends StoryLineNode
+{
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //Trigger Associations
+  private Mission mission;
+  private BlackTriangle blackTriangle;
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public Trigger(Position aPosition, Mission aMission, BlackTriangle aBlackTriangle)
+  {
+    super(aPosition);
+    if (!setMission(aMission))
+    {
+      throw new RuntimeException("Unable to create Trigger due to aMission");
+    }
+    if (aBlackTriangle == null || aBlackTriangle.getTrigger() != null)
+    {
+      throw new RuntimeException("Unable to create Trigger due to aBlackTriangle");
+    }
+    blackTriangle = aBlackTriangle;
+  }
+
+  public Trigger(Position aPosition, Mission aMission, int aSizeForBlackTriangle)
+  {
+    super(aPosition);
+    mission = new Mission(null);
+    blackTriangle = new BlackTriangle(aSizeForBlackTriangle, this);
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public Mission getMission()
+  {
+    return mission;
+  }
+
+  public BlackTriangle getBlackTriangle()
+  {
+    return blackTriangle;
+  }
+
+  public boolean setMission(Mission aNewMission)
+  {
+    boolean wasSet = false;
+    if (aNewMission != null)
+    {
+      mission = aNewMission;
+      wasSet = true;
+    }
+    return wasSet;
+  }
+
+  public void delete()
+  {
+    mission = null;
+    BlackTriangle existingBlackTriangle = blackTriangle;
+    blackTriangle = null;
+    if (existingBlackTriangle != null)
+    {
+      existingBlackTriangle.delete();
+    }
+    super.delete();
+  }
+
+}

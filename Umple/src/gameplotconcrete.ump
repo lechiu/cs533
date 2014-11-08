@@ -2,7 +2,7 @@ class StartPoint
 {
 	0..1 startPoint -> 0..1 Condition precondition;
 	1 startPoint -- * InBinding inBindings;
-    1 startPoint -> 1 BlackCircle;
+    1 startPoint -> 1 OvalShape;
   
 	isA StoryLineNode;
 }
@@ -28,14 +28,25 @@ class Binding
 
 class OutBinding
 {
-	
+
 }
 
 class EndPoint
 {
 	1 Endpoint -- * OutBinding outBindings;
 	1 Endpoint -> 0..1 Condition postcondition;
+	1 Endpoint -> 1 RectShape;
 	isA StoryLineNode;
+}
+
+class RectShape
+{
+	isA Shape;
+	void draw(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+		g.drawRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+  	}
 }
 
 class OpenEndPoint
@@ -46,11 +57,11 @@ class OpenEndPoint
 
 class Mission
 {
-	1 Mission -> * Binding bindings;
-	1 Mission -- 1 ReturnPoint returnPoint;
-	1 -- 1 RoundRectShape;
 	isA StoryLineNode;
-	description;
+	1 Mission -> * Binding bindings;
+	1 Mission -> 1 ReturnPoint returnPoint;
+	1 -> 1 Shape;
+	description = "";
 	Boolean isDynamic = false; 
 }
 
@@ -61,8 +72,8 @@ class ReturnPoint
 
 class Trigger
 {
-	1 trigger -- 1 Mission mission;
-	1 -- 1 BlackTriangle;
+	1 trigger -> 1 Mission mission;
+	1 -> 1 BlackTriangle;
 	isA StoryLineNode;
 }
 
@@ -105,11 +116,28 @@ class StoryLineNodeConnection
 	autounique storyLineNodeConnectionId;	
 }
 
-class BlackCircle
+class OvalShape
 {
-  Integer size;
-  String colour;
-  }
+	isA Shape;
+	void draw(Graphics g) {
+		g.setColor(Color.black);
+		g.fillOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+		g.drawOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+  	}
+  	
+	boolean containsPoint(int x, int y) {
+	// Check whether (x,y) is inside this oval, using the
+	// mathematical equation of an ellipse.
+	double rx = this.getWidth()/2.0;   // horizontal radius of ellipse
+	double ry = this.getHeight()/2.0;  // vertical radius of ellipse 
+	double cx = this.getLeft() + rx;   // x-coord of center of ellipse
+	double cy = this.getTop() + ry;    // y-coord of center of ellipse
+	if ( (ry*(x-cx))*(ry*(x-cx)) + (rx*(y-cy))*(rx*(y-cy)) <= rx*rx*ry*ry )
+		return true;
+	else
+		return false;
+	}
+}
 
 class ConcreteCondition
 {
@@ -117,9 +145,57 @@ class ConcreteCondition
   description;
 }
 
+class Shape
+{
+	Integer left;
+	Integer top;
+	Integer width;
+	Integer height;
+	Color color = Color.white;
+	
+	void reshape(int left, int top, int width, int height) {
+		// Set the position and size of this shape.
+		this.left = left;
+		this.top = top;
+		this.width = width;
+		this.height = height;
+	}
+	
+	void moveBy(int dx, int dy) {
+		// Move the shape by dx pixels horizontally and dy pixels vertically
+		// (by changing the position of the top-left corner of the shape).
+	    left += dx;
+	    top += dy;
+	}
+
+	void setColor(Color color) {
+		// Set the color of this shape
+		this.color = color;
+	}
+
+	boolean containsPoint(int x, int y) {
+		// Check whether the shape contains the point (x,y).
+		// By default, this just checks whether (x,y) is inside the
+		// rectangle that bounds the shape.  This method should be
+		// overridden by a subclass if the default behavior is not
+		// appropriate for the subclass.
+		if (x >= left && x < left+width && y >= top && y < top+height)
+			return true;
+		else
+			return false;
+	}
+
+	void draw(Graphics g){}; 
+}
+
 class RoundRectShape{
-	Integer size;
-	colour = "black";
+	isA Shape;
+	void draw(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);
+		g.drawRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);
+		g.drawString("M", this.getLeft(), this.getTop());
+	}
 }
 
 class BlackTriangle{
