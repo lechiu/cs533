@@ -48,7 +48,7 @@ class Mission
 {
 	1 Mission -> * Binding bindings;
 	1 Mission -- 1 ReturnPoint returnPoint;
-	1 -- 1 Diamond;
+	1 -- 1 RoundRectShape;
 	isA StoryLineNode;
 	description;
 	Boolean isDynamic = false; 
@@ -117,7 +117,7 @@ class ConcreteCondition
   description;
 }
 
-class Diamond{
+class RoundRectShape{
 	Integer size;
 	colour = "black";
 }
