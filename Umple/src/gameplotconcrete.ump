@@ -36,7 +36,7 @@ class EndPoint
 {
 	1 Endpoint -- * OutBinding outBindings;
 	1 Endpoint -> 0..1 Condition postcondition;
-	1 Endpoint -> 1 RectShape;
+	1 Endpoint -> 1 Shape;
 	isA StoryLineNode;
 }
 

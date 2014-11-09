@@ -23,8 +23,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.xml.ws.Endpoint;
 
 import model.Model;
+import concretecode.EndPoint;
 import concretecode.Mission;
 import concretecode.OvalShape;
 import concretecode.Position;
@@ -192,6 +194,7 @@ public class UserInterface2{
 
 	static class ShapeCanvas extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 		ArrayList<Mission> missions = new ArrayList<Mission>();
+		ArrayList<EndPoint> endpoints = new ArrayList<EndPoint>();
 		ArrayList<Shape> shapes = new ArrayList<Shape>(); //holds the list of shapes that are displayed on the canvas
 		Color currentColor = Color.black;
 		Shape elementClickedOn = null; // records the last element you clicked on
@@ -221,7 +224,7 @@ public class UserInterface2{
             // buttons have been set up to send action events to this canvas.
             // Respond by adding the appropriate shape to the canvas.
 
-     	   // Test Dummy Objects
+			// Test Dummy Objects
 			Position aPos1 = new Position(8, 8);
 			Position aPos2 = new Position(9, 9);
 			ReturnPoint aReturnPoint = new ReturnPoint(aPos2);
@@ -243,6 +246,8 @@ public class UserInterface2{
 	           else if (command.equals("End Point"))
 	           {
 	        	   Shape aShape = new RectShape(10, 10, 10, 30);
+	        	   EndPoint aEndPoint = new EndPoint(aPos1, aShape);
+	        	   endpoints.add(aEndPoint);
 //	        	   addShape(new RectShape(),10,30);
 	        	   addShape(aShape,10,30);
 	           }

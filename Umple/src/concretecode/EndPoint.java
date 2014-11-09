@@ -16,19 +16,19 @@ public class EndPoint extends StoryLineNode
   //EndPoint Associations
   private List<OutBinding> outBindings;
   private Condition postcondition;
-  private RectShape rectShape;
+  private Shape shape;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public EndPoint(Position aPosition, RectShape aRectShape)
+  public EndPoint(Position aPosition, Shape aShape)
   {
     super(aPosition);
     outBindings = new ArrayList<OutBinding>();
-    if (!setRectShape(aRectShape))
+    if (!setShape(aShape))
     {
-      throw new RuntimeException("Unable to create EndPoint due to aRectShape");
+      throw new RuntimeException("Unable to create EndPoint due to aShape");
     }
   }
 
@@ -77,9 +77,9 @@ public class EndPoint extends StoryLineNode
     return has;
   }
 
-  public RectShape getRectShape()
+  public Shape getShape()
   {
-    return rectShape;
+    return shape;
   }
 
   public static int minimumNumberOfOutBindings()
@@ -163,12 +163,12 @@ public class EndPoint extends StoryLineNode
     return wasSet;
   }
 
-  public boolean setRectShape(RectShape aNewRectShape)
+  public boolean setShape(Shape aNewShape)
   {
     boolean wasSet = false;
-    if (aNewRectShape != null)
+    if (aNewShape != null)
     {
-      rectShape = aNewRectShape;
+      shape = aNewShape;
       wasSet = true;
     }
     return wasSet;
@@ -182,7 +182,7 @@ public class EndPoint extends StoryLineNode
       aOutBinding.delete();
     }
     postcondition = null;
-    rectShape = null;
+    shape = null;
     super.delete();
   }
 

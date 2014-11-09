@@ -20,9 +20,9 @@ public class OpenEndPoint extends EndPoint
   // CONSTRUCTOR
   //------------------------
 
-  public OpenEndPoint(Position aPosition, RectShape aRectShape, WhiteCircle aWhiteCircle)
+  public OpenEndPoint(Position aPosition, Shape aShape, WhiteCircle aWhiteCircle)
   {
-    super(aPosition, aRectShape);
+    super(aPosition, aShape);
     if (!setWhiteCircle(aWhiteCircle))
     {
       throw new RuntimeException("Unable to create OpenEndPoint due to aWhiteCircle");
