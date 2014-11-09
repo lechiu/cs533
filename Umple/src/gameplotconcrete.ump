@@ -3,7 +3,7 @@ class StartPoint
 	depend java.util.*;
 	0..1 startPoint -> 0..1 Condition precondition;
 	1 startPoint -- * InBinding inBindings;
-    1 startPoint -> 1 OvalShape;
+    1 startPoint -> 1 Shape;
   
 	isA StoryLineNode;
 }

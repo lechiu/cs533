@@ -17,19 +17,19 @@ public class StartPoint extends StoryLineNode
   //StartPoint Associations
   private Condition precondition;
   private List<InBinding> inBindings;
-  private OvalShape ovalShape;
+  private Shape shape;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public StartPoint(Position aPosition, OvalShape aOvalShape)
+  public StartPoint(Position aPosition, Shape aShape)
   {
     super(aPosition);
     inBindings = new ArrayList<InBinding>();
-    if (!setOvalShape(aOvalShape))
+    if (!setShape(aShape))
     {
-      throw new RuntimeException("Unable to create StartPoint due to aOvalShape");
+      throw new RuntimeException("Unable to create StartPoint due to aShape");
     }
   }
 
@@ -78,9 +78,9 @@ public class StartPoint extends StoryLineNode
     return index;
   }
 
-  public OvalShape getOvalShape()
+  public Shape getShape()
   {
-    return ovalShape;
+    return shape;
   }
 
   public boolean setPrecondition(Condition aNewPrecondition)
@@ -163,12 +163,12 @@ public class StartPoint extends StoryLineNode
     return wasAdded;
   }
 
-  public boolean setOvalShape(OvalShape aNewOvalShape)
+  public boolean setShape(Shape aNewShape)
   {
     boolean wasSet = false;
-    if (aNewOvalShape != null)
+    if (aNewShape != null)
     {
-      ovalShape = aNewOvalShape;
+      shape = aNewShape;
       wasSet = true;
     }
     return wasSet;
@@ -182,7 +182,7 @@ public class StartPoint extends StoryLineNode
       InBinding aInBinding = inBindings.get(i - 1);
       aInBinding.delete();
     }
-    ovalShape = null;
+    shape = null;
     super.delete();
   }
 

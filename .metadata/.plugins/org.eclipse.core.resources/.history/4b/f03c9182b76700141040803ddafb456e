@@ -1,0 +1,465 @@
+package GUI;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
+import model.Model;
+import concretecode.EndPoint;
+import concretecode.Mission;
+import concretecode.OvalShape;
+import concretecode.Position;
+import concretecode.RectShape;
+import concretecode.ReturnPoint;
+import concretecode.RoundRectShape;
+import concretecode.Shape;
+import concretecode.StartPoint;
+
+/**
+ * @author LennyChiu
+ *
+ */
+public class UserInterface2{
+	private static Logger logger = Logger.getLogger(UserInterface.class.getName());
+	private static Integer trial;
+	final static int ROWS_IN_LEFT_PANEL = 5;
+	final static int COLUMNS_IN_LEFT_PANEL = 1;
+	private static JFrame aFrame = new JFrame();
+	private static JPanel rightPanel;
+	private static JPanel leftPanel;
+	
+	
+	public static void main(String[] args) {
+		build();
+	}
+	
+	/**
+	 * Build the GUI
+	 */
+	public static void build()
+	{
+		JMenuBar aMenuPanel = new JMenuBar();
+		JMenu aData = dataMenu();
+		aFrame.setJMenuBar(aMenuPanel);
+		
+		aMenuPanel.add(aData);
+		
+		//added code robin
+		ShapeCanvas canvas = new ShapeCanvas();// create the canvas
+		
+  		rightPanel = canvas;// change this to the canvas
+		leftPanel = createPalette(canvas);
+  		leftPanel.setLayout(new GridLayout(ROWS_IN_LEFT_PANEL,COLUMNS_IN_LEFT_PANEL));
+  		aFrame.setLayout(new BorderLayout(3,3));
+		aFrame.add("Center",rightPanel);
+		aFrame.add("West",leftPanel);
+		aFrame.setTitle("Domain Modeling Notation");
+		aFrame.setSize(600,600);
+		aFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		aFrame.setVisible(true);
+	}
+	
+	/**
+	 * @return A JPanel that consists of the palette.
+	 */
+	private static JPanel createPalette(ShapeCanvas canvas)
+	{
+		final JButton diamondButton = new JButton("Mission"); // buttons for adding shapes
+ 		diamondButton.addActionListener(canvas);
+ 		
+		final JButton startPointButton = new JButton("Start Point"); // buttons for adding shapes
+ 		startPointButton.addActionListener(canvas);
+ 		
+		final JButton endPointButton = new JButton("End Point"); // buttons for adding shapes
+ 		endPointButton.addActionListener(canvas);
+ 		
+		final JButton linkButton = new JButton("Link"); // buttons for adding shapes
+ 		linkButton.addActionListener(canvas);
+ 		
+		final JButton deleteButton = new JButton("Delete"); // buttons for adding shapes
+ 		deleteButton.addActionListener(canvas);
+ 		
+ 		JPanel aPalettePanel = new JPanel();
+ 		aPalettePanel.add(diamondButton);
+ 		aPalettePanel.add(startPointButton);
+ 		aPalettePanel.add(endPointButton);
+ 		aPalettePanel.add(linkButton);
+ 		aPalettePanel.add(deleteButton);
+		return aPalettePanel;
+	}
+	
+	/**
+	 * @return A file menu with the option to load or save a model.
+	 */
+	private static JMenu dataMenu()
+	{
+		JMenu aData = new JMenu("File");
+		aData.setMnemonic(KeyEvent.VK_D);
+
+		final JMenuItem lLoaddisk = new JMenuItem("Load from Disk");
+		lLoaddisk.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+		lLoaddisk.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				logger.info("Selected Load from Disk");
+				JFileChooser aFc = new JFileChooser();
+				aFc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				File location = new File(System.getProperty("user.home"));
+				
+				aFc.setCurrentDirectory(location);
+				int value = aFc.showOpenDialog(lLoaddisk);
+				if(value == JFileChooser.APPROVE_OPTION)
+				{
+					File dataLocation = aFc.getSelectedFile();
+					// Need to implement.
+				}
+				else
+				{
+					logger.info("Load from Disk command cancelled by user.");
+				}
+			}
+		});
+		aData.add(lLoaddisk);
+		
+		final JMenuItem lExport = new JMenuItem("Save to Disk");
+		lExport.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
+		lExport.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent pEvent)
+			{
+				logger.info("Selected Export");
+				JFileChooser aExportChooser = new JFileChooser();
+				aExportChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				File location = new File(System.getProperty("user.home"));
+
+				aExportChooser.setCurrentDirectory(location);
+				int value = aExportChooser.showSaveDialog(lExport);
+				if (value == JFileChooser.APPROVE_OPTION) 
+				{
+					// Need to implement.
+					try
+					{
+						File dataLocation = aExportChooser.getSelectedFile();
+						String newPath = dataLocation.getAbsolutePath()+ File.separator;
+						logger.info("Saving User Profile to disk location: " + newPath);
+						for (int j = 0; j < 8; j++)
+						{
+							trial = new Integer(8);
+						}
+					}
+					catch(NullPointerException e)
+					{
+						logger.warning("Error exporting file.");
+					}
+					
+					Model m = new Model();
+					m.persist(trial, aExportChooser.getSelectedFile().toString());
+				    File fileToSave = aExportChooser.getCurrentDirectory();
+					String aPath = fileToSave.getAbsolutePath();
+					logger.info("Save file to " + fileToSave.getAbsolutePath());
+				}
+		        else 
+		        {
+		        	logger.info("Save/Export command cancelled by user.");
+		        }
+			}
+		});
+		aData.add(lExport);
+		return aData;
+	}
+
+
+	static class ShapeCanvas extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+		ArrayList<Mission> missions = new ArrayList<Mission>();
+		ArrayList<EndPoint> endpoints = new ArrayList<EndPoint>();
+		ArrayList<StartPoint> startpoints = new ArrayList<StartPoint>();
+		ArrayList<Shape> shapes = new ArrayList<Shape>(); //holds the list of shapes that are displayed on the canvas
+		Color currentColor = Color.black;
+		Shape elementClickedOn = null; // records the last element you clicked on
+		
+		ShapeCanvas() {
+			// Constructor: set background color to white set up listeners to
+			// respond to mouse actions
+			setBackground(Color.white);
+			addMouseListener(this);
+			addMouseMotionListener(this);
+		}
+		
+		public void paintComponent(Graphics g) {
+			// In the paint method, all the shapes in ArrayList are
+			// copied onto the canvas.
+			g.setColor(getBackground());
+			g.fillRect(0, 0, getSize().width, getSize().height);
+			int top = shapes.size();
+			for (int i = 0; i < top; i++) {
+				Shape s = (Shape) shapes.get(i);
+				s.draw(g);
+			}
+		}
+		
+		public void actionPerformed(ActionEvent evt) {
+            // Called to respond to action events.  The three shape-adding
+            // buttons have been set up to send action events to this canvas.
+            // Respond by adding the appropriate shape to the canvas.
+
+			// Test Dummy Objects
+			Position aPos1 = new Position(8, 8);
+			Position aPos2 = new Position(9, 9);
+			ReturnPoint aReturnPoint = new ReturnPoint(aPos2);
+			
+	           String command = evt.getActionCommand();
+	           if (command.equals("Mission"))
+	           {
+	        	   Shape aShape = new RoundRectShape(10, 10, 50, 50);
+	        	   Mission aMission = new Mission(aPos1, aReturnPoint, aShape);
+	        	   missions.add(aMission);
+	        	   addShape(aShape,50,50);
+	           }
+	           else if (command.equals("Start Point"))
+	           {
+	        	  Shape aShape = new OvalShape(10, 10, 30, 30);
+	        	  StartPoint aStartPoint = new StartPoint(aPos1, aShape)
+//	              addShape(new OvalShape(),30,30);
+	        	  addShape(aShape,50,50);
+	           }
+	           else if (command.equals("End Point"))
+	           {
+	        	   Shape aShape = new RectShape(10, 10, 10, 30);
+	        	   EndPoint aEndPoint = new EndPoint(aPos1, aShape);
+	        	   endpoints.add(aEndPoint);
+//	        	   addShape(new RectShape(),10,30);
+	        	   addShape(aShape,10,30);
+	           }
+	           else if (command.equals("Delete"))
+	           {
+	        	   System.out.println("Pressed Delete");
+	        	   if(elementClickedOn != null)
+	        	   {
+	        		   deleteElement();
+	        	   }
+	           }
+         }
+		
+		void addShape(Shape shape, int width, int height) {
+			// Add the shape to the canvas, and set its size/position and color.
+			// The shape is added at the top-left corner, with size 80-by-50.
+			// Then redraw the canvas to show the newly added shape.
+			shape.setColor(currentColor);
+			shape.reshape(10, 10, width, height);
+			shapes.add(shape);
+			repaint();
+		}
+		
+		// remove an element (Shape) from the list
+		void deleteElement()
+		{
+			System.out.println("Want to delete the currrently selected item: " + elementClickedOn.getClass().getSimpleName());
+			for(int index = 0; index < shapes.size(); index++)
+			{
+				if(shapes.get(index).getClass().getSimpleName().equals(elementClickedOn.getClass().getSimpleName()))
+				{
+//					System.out.println("List size before deletion: " + shapes.size());
+					shapes.remove(index);
+//					System.out.println("List size after deletion: " + shapes.size());
+					break;	// deleted the wanted element, do exit loop
+				}
+			}
+			elementClickedOn = null; // set the elementClickedOn back to null
+			repaint();	// update the canvas after deleting element
+		}
+		
+		
+		// -------------------- This rest of this class implements dragging
+		// ----------------------
+
+		Shape shapeBeingDragged = null; // This is null unless a shape is being
+										// dragged.
+										// A non-null value is used as a signal
+										// that dragging
+										// is in progress, as well as indicating
+										// which shape
+										// is being dragged.
+
+		int prevDragX; // During dragging, these record the x and y coordinates
+						// of the
+		int prevDragY; // previous position of the mouse.
+	      
+
+		@Override
+		public void mouseDragged(MouseEvent evt) {
+			// TODO Auto-generated method stub
+			// User has pressed the mouse. Find the shape that the user has
+			// clicked on, if
+			// any. If there is a shape at the position when the mouse was
+			// clicked, then
+			// start dragging it. If the user was holding down the shift key,
+			// then bring
+			// the dragged shape to the front, in front of all the other shapes.
+			int x = evt.getX(); // x-coordinate of point where mouse was clicked
+			int y = evt.getY(); // y-coordinate of point
+			for (int i = shapes.size() - 1; i >= 0; i--) { // check shapes from
+															// front to back
+				Shape s = (Shape) shapes.get(i);
+				if (s.containsPoint(x, y)) {
+					shapeBeingDragged = s;
+					prevDragX = x;
+					prevDragY = y;
+					if (evt.isShiftDown()) { // Bring the shape to the front by
+												// moving it to
+						shapes.remove(s); // the end of the list of shapes.
+						shapes.add(s);
+						repaint(); // repaint canvas to show shape in front of
+									// other shapes
+					}
+					return;
+				}
+			}//end for
+
+		}//end mouse dragged
+
+		@Override
+		public void mouseMoved(MouseEvent evt) {
+			// TODO Auto-generated method stub
+			// User has moved the mouse. Move the dragged shape by the same
+			// amount.
+			int x = evt.getX();
+			int y = evt.getY();
+			if (shapeBeingDragged != null) {
+				shapeBeingDragged.moveBy(x - prevDragX, y - prevDragY);
+				prevDragX = x;
+				prevDragY = y;
+				repaint(); // redraw canvas to show shape in new position
+			}
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent evt) {
+			// User has released the mouse. Move the dragged shape, then set
+			// shapeBeingDragged to null to indicate that dragging is over.
+			// If the shape lies completely outside the canvas, remove it
+			// from the list of shapes (since there is no way to ever move
+			// it back onscreen).
+			int x = evt.getX();
+			int y = evt.getY();
+			for (int i = shapes.size() - 1; i >= 0; i--) { // check shapes from front to back
+				Shape s = (Shape) shapes.get(i);
+				if (s.containsPoint(x, y)) {
+					elementClickedOn = s;
+				}
+			}
+						
+			if (shapeBeingDragged != null) {
+				shapeBeingDragged.moveBy(x - prevDragX, y - prevDragY);
+				if (shapeBeingDragged.getLeft() >= getSize().width
+						|| shapeBeingDragged.getTop() >= getSize().height
+						|| shapeBeingDragged.getLeft() + shapeBeingDragged.getWidth() < 0
+						|| shapeBeingDragged.getTop() + shapeBeingDragged.getHeight() < 0) { // shape
+																					// is
+																					// off-screen
+					shapes.remove(shapeBeingDragged); // remove shape from list
+														// of shapes
+				}
+				
+				shapeBeingDragged = null;
+				repaint();
+			}
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent evt) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent evt) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent evt) {
+			// TODO Auto-generated method stub
+			Shape aShape = null;
+			String classname = "";
+			int x = evt.getX(); // x-coordinate of point where mouse was clicked
+			int y = evt.getY(); // y-coordinate of point
+			for (int i = shapes.size() - 1; i >= 0; i--) { 
+				Shape s = (Shape) shapes.get(i);
+				if (s.containsPoint(x, y)) {
+					aShape = s;
+					classname = aShape.getClass().getSimpleName();
+				}
+			}
+			
+			if(evt.getClickCount() == 2 && classname.equals("RoundRectShape"))
+			{
+				Mission m = null;
+				String description = " ";
+				for(int i = 0; i < missions.size(); i++)
+				{
+					m = (Mission) missions.get(i);
+					Shape s = m.getShape();
+					if(s == aShape)
+					{
+						description = JOptionPane.showInputDialog("Description: " + m.getDescription());
+						break;
+					}
+				}
+				
+				if(description == null)
+				{
+					System.out.println("Pressed cancel");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(aFrame, "Description Succesfully Updated!");
+					for(int j = 0; j < missions.size(); j++)
+					{
+						m = (Mission) missions.get(j);
+						Shape s = m.getShape();
+						if(s == aShape)
+						{
+							m.setDescription(description);
+						}
+					}
+					// To check all messages of each Mission
+//					for(int j = missions.size() - 1; j >= 0; j--)
+//					{
+//						System.out.println("Index "+ j + "Description: " + missions.get(j).getDescription());
+//					}
+				}
+	        }
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent evt) {
+			// TODO Auto-generated method stub
+		}
+	}// end shapecanvas
+}// end interface class
+	
