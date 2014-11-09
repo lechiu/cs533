@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 211 "gameplotconcrete.ump"
+// line 224 "gameplotconcrete.ump"
 public class SolidLine
 {
 

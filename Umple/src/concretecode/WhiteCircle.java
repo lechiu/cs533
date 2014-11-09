@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 215 "gameplotconcrete.ump"
+// line 228 "gameplotconcrete.ump"
 public class WhiteCircle
 {
 

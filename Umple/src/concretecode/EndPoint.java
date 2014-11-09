@@ -5,7 +5,7 @@ package concretecode;
 
 import java.util.*;
 
-// line 34 "gameplotconcrete.ump"
+// line 35 "gameplotconcrete.ump"
 public class EndPoint extends StoryLineNode
 {
 

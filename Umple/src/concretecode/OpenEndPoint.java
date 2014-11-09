@@ -5,7 +5,7 @@ package concretecode;
 
 import java.util.*;
 
-// line 52 "gameplotconcrete.ump"
+// line 55 "gameplotconcrete.ump"
 public class OpenEndPoint extends EndPoint
 {
 

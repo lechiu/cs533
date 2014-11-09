@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="GUI.UserInterface.RoundRectShape"/>
+<fullyQualifiedTypeName name="concretecode.RoundRectShape"/>
+<fullyQualifiedTypeName name="concretecode.Shape"/>
+<fullyQualifiedTypeName name="concretecode.Mission"/>
+<fullyQualifiedTypeName name="concretecode.Position"/>
+<fullyQualifiedTypeName name="concretecode.ReturnPoint"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+</qualifiedTypeNameHistroy>

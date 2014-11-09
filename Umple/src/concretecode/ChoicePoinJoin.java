@@ -5,7 +5,7 @@ package concretecode;
 
 import java.util.*;
 
-// line 86 "gameplotconcrete.ump"
+// line 91 "gameplotconcrete.ump"
 public class ChoicePoinJoin extends StoryLineNode
 {
 

@@ -5,7 +5,7 @@ package concretecode;
 
 import java.util.*;
 
-// line 22 "gameplotconcrete.ump"
+// line 23 "gameplotconcrete.ump"
 public class Binding
 {
 

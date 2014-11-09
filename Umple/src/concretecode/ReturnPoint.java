@@ -5,7 +5,7 @@ package concretecode;
 
 import java.util.*;
 
-// line 68 "gameplotconcrete.ump"
+// line 72 "gameplotconcrete.ump"
 public class ReturnPoint extends StoryLineNode
 {
 

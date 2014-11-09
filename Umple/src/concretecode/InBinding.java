@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 17 "gameplotconcrete.ump"
+// line 18 "gameplotconcrete.ump"
 public class InBinding
 {
 

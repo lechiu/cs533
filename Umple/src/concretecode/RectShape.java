@@ -1,13 +1,12 @@
 package concretecode;
-
-import java.awt.Color;
-import java.awt.Graphics;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
 
 
+import java.awt.Color;
+import java.awt.Graphics;
 
-// line 42 "gameplotconcrete.ump"
+// line 43 "gameplotconcrete.ump"
 public class RectShape extends Shape
 {
 
@@ -33,7 +32,7 @@ public class RectShape extends Shape
     super.delete();
   }
 
-  // line 46 "gameplotconcrete.ump"
+  // line 49 "gameplotconcrete.ump"
   public void draw(Graphics g){
     g.setColor(Color.black);
 		g.fillRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());

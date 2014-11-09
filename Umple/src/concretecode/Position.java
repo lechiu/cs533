@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 206 "gameplotconcrete.ump"
+// line 219 "gameplotconcrete.ump"
 public class Position
 {
 

@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 112 "gameplotconcrete.ump"
+// line 118 "gameplotconcrete.ump"
 public class StoryLineNodeConnection
 {
 

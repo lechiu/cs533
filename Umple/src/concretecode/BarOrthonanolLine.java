@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 228 "gameplotconcrete.ump"
+// line 241 "gameplotconcrete.ump"
 public class BarOrthonanolLine
 {
 

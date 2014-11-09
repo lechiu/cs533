@@ -4,8 +4,9 @@ package concretecode;
 
 
 import java.util.*;
+import java.util.*;
 
-// line 73 "gameplotconcrete.ump"
+// line 77 "gameplotconcrete.ump"
 public class Trigger extends StoryLineNode
 {
 

@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 142 "gameplotconcrete.ump"
+// line 150 "gameplotconcrete.ump"
 public class ConcreteCondition
 {
 

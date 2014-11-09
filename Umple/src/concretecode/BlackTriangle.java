@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 201 "gameplotconcrete.ump"
+// line 214 "gameplotconcrete.ump"
 public class BlackTriangle
 {
 
