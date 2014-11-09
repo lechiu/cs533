@@ -21,6 +21,7 @@ public class OvalShape extends Shape
   public OvalShape(int aLeft, int aTop, int aWidth, int aHeight)
   {
     super(aLeft, aTop, aWidth, aHeight);
+    System.out.println("oval shape created");
   }
 
   //------------------------

@@ -238,7 +238,7 @@ public class UserInterface2{
 	        	   Shape aShape = new RoundRectShape(10, 10, 50, 50);
 	        	   Mission aMission = new Mission(aPos1, aReturnPoint, aShape);
 	        	   missions.add(aMission);
-	        	   addShape(aShape,50,50);
+	        	   addShape(aShape);
 	           }
 	           else if (command.equals("Start Point"))
 	           {
@@ -246,7 +246,7 @@ public class UserInterface2{
 	        	  StartPoint aStartPoint = new StartPoint(aPos1, aShape);
 	        	  startpoints.add(aStartPoint);
 //	              addShape(new OvalShape(),30,30);
-	        	  addShape(aShape,50,50);
+	        	  addShape(aShape);
 	           }
 	           else if (command.equals("End Point"))
 	           {
@@ -254,7 +254,7 @@ public class UserInterface2{
 	        	   EndPoint aEndPoint = new EndPoint(aPos1, aShape);
 	        	   endpoints.add(aEndPoint);
 //	        	   addShape(new RectShape(),10,30);
-	        	   addShape(aShape,10,30);
+	        	   addShape(aShape);
 	           }
 	           else if (command.equals("Delete"))
 	           {
@@ -266,12 +266,12 @@ public class UserInterface2{
 	           }
          }
 		
-		void addShape(Shape shape, int width, int height) {
+		void addShape(Shape shape) {
 			// Add the shape to the canvas, and set its size/position and color.
 			// The shape is added at the top-left corner, with size 80-by-50.
 			// Then redraw the canvas to show the newly added shape.
 			shape.setColor(currentColor);
-			shape.reshape(10, 10, width, height);
+			//shape.reshape(10, 10, width, height);
 			shapes.add(shape);
 			repaint();
 		}

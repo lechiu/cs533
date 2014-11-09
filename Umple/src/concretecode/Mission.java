@@ -41,6 +41,7 @@ public class Mission extends StoryLineNode
     {
       throw new RuntimeException("Unable to create Mission due to aShape");
     }
+    System.out.println("Mission created");
   }
 
   //------------------------

@@ -30,6 +30,7 @@ public class EndPoint extends StoryLineNode
     {
       throw new RuntimeException("Unable to create EndPoint due to aShape");
     }
+    System.out.println("end point created");
   }
 
   //------------------------

@@ -31,6 +31,7 @@ public class StartPoint extends StoryLineNode
     {
       throw new RuntimeException("Unable to create StartPoint due to aShape");
     }
+    System.out.println("StartPoint created");
   }
 
   //------------------------

@@ -21,6 +21,7 @@ public class RoundRectShape extends Shape
   public RoundRectShape(int aLeft, int aTop, int aWidth, int aHeight)
   {
     super(aLeft, aTop, aWidth, aHeight);
+    System.out.println("Round Rect shape created");
   }
 
   //------------------------

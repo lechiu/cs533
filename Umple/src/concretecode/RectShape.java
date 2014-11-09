@@ -21,6 +21,7 @@ public class RectShape extends Shape
   public RectShape(int aLeft, int aTop, int aWidth, int aHeight)
   {
     super(aLeft, aTop, aWidth, aHeight);
+    System.out.println("rect shape created");
   }
 
   //------------------------
