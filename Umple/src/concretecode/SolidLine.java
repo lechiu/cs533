@@ -59,7 +59,7 @@ public class SolidLine extends Shape
       	g2.setColor(Color.BLACK);
       	g2.setStroke(new BasicStroke(10));
       	g2.fillRect(2,2,2,2);
-	  	g.drawLine(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+	  	g2.drawLine(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
   }
 
   // line 242 "gameplotconcrete.ump"
