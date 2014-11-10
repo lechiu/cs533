@@ -66,7 +66,7 @@ class Mission
 	1 Mission -> 1 ReturnPoint returnPoint;
 	1 -> 1 Shape;
 	description = "";
-	Boolean isDynamic = false; 
+	Boolean isDynamic = false;
 }
 
 class ReturnPoint
@@ -102,12 +102,13 @@ class MissionTask
 
 class ParallelFork
 {
-	1 ParallelFork -> 1 BarOrthonanolLine;
+	1 ParallelFork -> 1 BarOrthogonalLine;
 	isA StoryLineNode;
 }
 
 class StoryLineNode
 {
+	depend java.awt.Point;
 	1 target -- * StoryLineNodeConnection predecessor;
 	1 source -- * StoryLineNodeConnection successor;
 	1  -> 1 Position;
@@ -117,8 +118,11 @@ class StoryLineNode
 
 class StoryLineNodeConnection
 {
-	1 StoryLineNodeConnection -> 1 SolidLine;
-	1 StoryLineNodeConnection -> 1 Position;
+	depend java.awt.Point;
+	isA StoryLineNode;
+	1 StoryLineNodeConnection -> 1 Shape;
+	Point p1;
+	Point p2;
 	autounique storyLineNodeConnectionId;	
 }
 
@@ -157,6 +161,7 @@ class Shape
 {
 	depend java.awt.Color;
 	depend java.awt.Graphics;
+	lazy Integer shapeId;
 	Integer left;
 	Integer top;
 	Integer width;
@@ -176,11 +181,6 @@ class Shape
 		// (by changing the position of the top-left corner of the shape).
 	    left += dx;
 	    top += dy;
-	}
-
-	void setColor(Color color) {
-		// Set the color of this shape
-		this.color = color;
 	}
 
 	boolean containsPoint(int x, int y) {
@@ -222,7 +222,29 @@ class Position{
 }
 
 class SolidLine{
-	colour = "black";
+	depend java.awt.BasicStroke;
+	depend java.awt.Color;
+	depend java.awt.Graphics;
+	depend java.awt.Graphics2D;
+	depend java.awt.RenderingHints;
+	isA Shape;
+	Color aColor = Color.black;
+	void draw(Graphics g){
+	  	Graphics2D g2 = (Graphics2D) g.create();
+      	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      	g2.setColor(Color.BLACK);
+      	g2.setStroke(new BasicStroke(10));
+      	g2.fillRect(2,2,2,2);
+	  	g.drawLine(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+  	}
+  	
+  	boolean containsPoint(int x, int y){
+	    // Check whether (x,y) is inside the first point of line.
+		if (x >= this.getLeft() && x < this.getLeft() + 10 && y >= this.getTop() && y < this.getTop() + 10)
+			return true;
+		else
+			return false;
+  	}	
 }
 
 class WhiteCircle{
@@ -238,7 +260,7 @@ class BlueCircle{
 class XSymbol{
 }
 
-class BarOrthonanolLine{
+class BarOrthogonalLine{
 }
 
 class Label{

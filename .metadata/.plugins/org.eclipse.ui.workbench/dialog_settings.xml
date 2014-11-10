@@ -16,4 +16,16 @@
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
 		<item value="330" key="DIALOG_X_ORIGIN"/>
 	</section>
+	<section name="NewWizardAction">
+		<item value="org.eclipse.jdt.ui.wizards.NewClassCreationWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.acceleo.ide.ui"/>
+			<item value="org.eclipse.datatools.connectivity"/>
+			<item value="org.eclipse.team.cvs.ui.newWizards"/>
+			<item value="com.soyatec.database.Database"/>
+			<item value="com.soyatec.edepend"/>
+		</list>
+	</section>
+	<section name="ImportExportAction">
+	</section>
 </section>

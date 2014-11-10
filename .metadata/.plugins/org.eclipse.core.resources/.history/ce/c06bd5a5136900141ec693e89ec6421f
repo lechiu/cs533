@@ -1,0 +1,276 @@
+class StartPoint
+{
+	depend java.util.*;
+	0..1 startPoint -> 0..1 Condition precondition;
+	1 startPoint -- * InBinding inBindings;
+    1 startPoint -> 1 Shape;
+  
+	isA StoryLineNode;
+}
+
+class Condition
+{
+	expression;
+  1 Condition -> 1 ConcreteCondition;
+  1 Condition -> 1 Label;
+}
+
+class InBinding
+{
+	
+}
+
+class Binding
+{
+	1 -- * InBinding inBindings;
+	1 -- * OutBinding outBindings;
+	autounique bindingId;
+}
+
+class OutBinding
+{
+
+}
+
+class EndPoint
+{
+	1 Endpoint -- * OutBinding outBindings;
+	1 Endpoint -> 0..1 Condition postcondition;
+	1 Endpoint -> 1 Shape;
+	isA StoryLineNode;
+}
+
+class RectShape
+{
+	depend java.awt.Color;
+	depend java.awt.Graphics;
+	isA Shape;
+	void draw(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+		g.drawRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+  	}
+}
+
+class OpenEndPoint
+{
+	1 OpenendPoint -> 1 WhiteCircle;
+	isA EndPoint;
+}
+
+class Mission
+{
+	depend java.util.*;
+	isA StoryLineNode;
+	1 Mission -> * Binding bindings;
+	1 Mission -> 1 ReturnPoint returnPoint;
+	1 -> 1 Shape;
+	description = "";
+	Boolean isDynamic = false; 
+}
+
+class ReturnPoint
+{
+	isA StoryLineNode;
+}
+
+class Trigger
+{
+	depend java.util.*;
+	1 trigger -> 1 Mission mission;
+	1 -> 1 BlackTriangle;
+	isA StoryLineNode;
+}
+
+class ChoicePoint
+{
+	1 ChoicePoint ->  1 BlueCircle;
+	isA StoryLineNode;
+}
+
+class ChoicePoinJoin
+{
+	isA StoryLineNode;
+}
+
+class MissionTask
+{
+	depend java.util.*;
+	1 MissionTask -> 1 XSymbol;
+	isA StoryLineNode;
+}
+
+class ParallelFork
+{
+	1 ParallelFork -> 1 BarOrthonanolLine;
+	isA StoryLineNode;
+}
+
+class StoryLineNode
+{
+	depend java.awt.Point;
+	1 target -- * StoryLineNodeConnection predecessor;
+	1 source -- * StoryLineNodeConnection successor;
+	1  -> 1 Position;
+    1 -> Label;
+	autounique storyLineNodeid;
+}
+
+class StoryLineNodeConnection
+{
+	depend java.awt.Point;
+	isA StoryLineNode;
+	1 StoryLineNodeConnection -> 1 Shape;
+	Point p1;
+	Point p2;
+	autounique storyLineNodeConnectionId;	
+}
+
+class OvalShape
+{
+	depend java.awt.Color;
+	depend java.awt.Graphics;
+	isA Shape;
+	void draw(Graphics g) {
+		g.setColor(Color.black);
+		g.fillOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+		g.drawOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+  	}
+  	
+	boolean containsPoint(int x, int y) {
+	// Check whether (x,y) is inside this oval, using the
+	// mathematical equation of an ellipse.
+	double rx = this.getWidth()/2.0;   // horizontal radius of ellipse
+	double ry = this.getHeight()/2.0;  // vertical radius of ellipse 
+	double cx = this.getLeft() + rx;   // x-coord of center of ellipse
+	double cy = this.getTop() + ry;    // y-coord of center of ellipse
+	if ( (ry*(x-cx))*(ry*(x-cx)) + (rx*(y-cy))*(rx*(y-cy)) <= rx*rx*ry*ry )
+		return true;
+	else
+		return false;
+	}
+}
+
+class ConcreteCondition
+{
+  label;
+  description;
+}
+
+class Shape
+{
+	depend java.awt.Color;
+	depend java.awt.Graphics;
+	lazy Integer shapeId;
+	Integer left;
+	Integer top;
+	Integer width;
+	Integer height;
+	Color color = Color.white;
+	
+	void reshape(int left, int top, int width, int height) {
+		// Set the position and size of this shape.
+		this.left = left;
+		this.top = top;
+		this.width = width;
+		this.height = height;
+	}
+	
+	void moveBy(int dx, int dy) {
+		// Move the shape by dx pixels horizontally and dy pixels vertically
+		// (by changing the position of the top-left corner of the shape).
+	    left += dx;
+	    top += dy;
+	}
+
+	void setColoring(Color color) {
+		// Set the color of this shape
+		this.color = color;
+	}
+
+	boolean containsPoint(int x, int y) {
+		// Check whether the shape contains the point (x,y).
+		// By default, this just checks whether (x,y) is inside the
+		// rectangle that bounds the shape.  This method should be
+		// overridden by a subclass if the default behavior is not
+		// appropriate for the subclass.
+		if (x >= left && x < left+width && y >= top && y < top+height)
+			return true;
+		else
+			return false;
+	}
+
+	void draw(Graphics g){}; 
+}
+
+class RoundRectShape{
+	depend java.awt.Color;
+	depend java.awt.Graphics;
+	
+	isA Shape;
+	void draw(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);
+		g.drawRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);
+		g.drawString("M", this.getLeft(), this.getTop());
+	}
+}
+
+class BlackTriangle{
+	Integer size;
+	colour = "black";
+}
+
+class Position{
+	Integer x;
+	Integer y;
+}
+
+class SolidLine{
+	depend java.awt.BasicStroke;
+	depend java.awt.Color;
+	depend java.awt.Graphics;
+	depend java.awt.Graphics2D;
+	depend java.awt.RenderingHints;
+	isA Shape;
+	Color aColor = Color.black;
+	void draw(Graphics g){
+	  	Graphics2D g2 = (Graphics2D) g.create();
+      	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      	g2.setColor(Color.BLACK);
+      	g2.setStroke(new BasicStroke(10));
+      	g2.fillRect(2,2,2,2);
+	  	g.drawLine(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+  	}
+  	
+  	boolean containsPoint(int x, int y){
+	    // Check whether (x,y) is inside the first point of line.
+		if (x >= this.getLeft() && x < this.getLeft() + 10 && y >= this.getTop() && y < this.getTop() + 10)
+			return true;
+		else
+			return false;
+  	}	
+}
+
+class WhiteCircle{
+	Integer size;
+	colour = "white";
+}
+
+class BlueCircle{
+	Integer size;
+	colour = "blue";
+}
+
+class XSymbol{
+}
+
+class BarOrthonanolLine{
+}
+
+class Label{
+	description;
+	Integer xPosition;
+	Integer yPosition;
+}
+

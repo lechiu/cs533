@@ -14,18 +14,18 @@ public class ParallelFork extends StoryLineNode
   //------------------------
 
   //ParallelFork Associations
-  private BarOrthonanolLine barOrthonanolLine;
+  private BarOrthogonalLine barOrthogonalLine;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public ParallelFork(Position aPosition, BarOrthonanolLine aBarOrthonanolLine)
+  public ParallelFork(Position aPosition, BarOrthogonalLine aBarOrthogonalLine)
   {
     super(aPosition);
-    if (!setBarOrthonanolLine(aBarOrthonanolLine))
+    if (!setBarOrthogonalLine(aBarOrthogonalLine))
     {
-      throw new RuntimeException("Unable to create ParallelFork due to aBarOrthonanolLine");
+      throw new RuntimeException("Unable to create ParallelFork due to aBarOrthogonalLine");
     }
   }
 
@@ -33,17 +33,17 @@ public class ParallelFork extends StoryLineNode
   // INTERFACE
   //------------------------
 
-  public BarOrthonanolLine getBarOrthonanolLine()
+  public BarOrthogonalLine getBarOrthogonalLine()
   {
-    return barOrthonanolLine;
+    return barOrthogonalLine;
   }
 
-  public boolean setBarOrthonanolLine(BarOrthonanolLine aNewBarOrthonanolLine)
+  public boolean setBarOrthogonalLine(BarOrthogonalLine aNewBarOrthogonalLine)
   {
     boolean wasSet = false;
-    if (aNewBarOrthonanolLine != null)
+    if (aNewBarOrthogonalLine != null)
     {
-      barOrthonanolLine = aNewBarOrthonanolLine;
+      barOrthogonalLine = aNewBarOrthogonalLine;
       wasSet = true;
     }
     return wasSet;
@@ -51,7 +51,7 @@ public class ParallelFork extends StoryLineNode
 
   public void delete()
   {
-    barOrthonanolLine = null;
+    barOrthogonalLine = null;
     super.delete();
   }
 

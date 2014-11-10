@@ -1,9 +1,13 @@
 package GUI;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -33,7 +37,9 @@ import concretecode.RectShape;
 import concretecode.ReturnPoint;
 import concretecode.RoundRectShape;
 import concretecode.Shape;
+import concretecode.SolidLine;
 import concretecode.StartPoint;
+import concretecode.StoryLineNode;
 import concretecode.StoryLineNodeConnection;
 
 /**
@@ -191,8 +197,7 @@ public class UserInterface2{
 		aData.add(lExport);
 		return aData;
 	}
-
-
+	
 	static class ShapeCanvas extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 		ArrayList<Mission> missions = new ArrayList<Mission>();
 		ArrayList<EndPoint> endpoints = new ArrayList<EndPoint>();
@@ -201,6 +206,16 @@ public class UserInterface2{
 		ArrayList<Shape> shapes = new ArrayList<Shape>(); //holds the list of shapes that are displayed on the canvas
 		Color currentColor = Color.black;
 		Shape elementClickedOn = null; // records the last element you clicked on
+		StoryLineNode aStoryLineNode1 = null;
+		StoryLineNode aStoryLineNode2 = null;
+		Point p1 = null;
+        Point p2 = null;
+        boolean lineDrawn = false;
+		boolean linkOn = false;
+		boolean connectionMade = false;
+
+		Position aPos3 = new Position(8, 8);
+		Position aPos4 = new Position(9, 9);
 		
 		ShapeCanvas() {
 			// Constructor: set background color to white set up listeners to
@@ -216,9 +231,27 @@ public class UserInterface2{
 			g.setColor(getBackground());
 			g.fillRect(0, 0, getSize().width, getSize().height);
 			int top = shapes.size();
+			
+			// Draw every shape
 			for (int i = 0; i < top; i++) {
 				Shape s = (Shape) shapes.get(i);
 				s.draw(g);
+			}
+			
+			// Draw every line connection
+			for(int k = 0; k < storylineconnection.size(); k++)
+			{
+				StoryLineNodeConnection slnc = storylineconnection.get(k);
+				Point point1 = slnc.getP1();
+				Point point2 = slnc.getP2();
+	            if(point1 != null && point2 != null){
+	                Graphics2D g2 = (Graphics2D) g.create();
+	                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	                g2.setColor(Color.BLACK);
+	                g2.setStroke(new BasicStroke(10));
+	                g2.drawLine((int)point1.getX(), (int)point1.getY(), (int)point2.getX(), (int)point2.getY());
+	                g2.dispose();
+	            }
 			}
 		}
 		
@@ -239,6 +272,8 @@ public class UserInterface2{
 	        	   Mission aMission = new Mission(aPos1, aReturnPoint, aShape);
 	        	   missions.add(aMission);
 	        	   addShape(aShape,50,50);
+	        	   linkOn = false;
+	        	   p1 = null;
 	           }
 	           else if (command.equals("Start Point"))
 	           {
@@ -247,6 +282,8 @@ public class UserInterface2{
 	        	  startpoints.add(aStartPoint);
 //	              addShape(new OvalShape(),30,30);
 	        	  addShape(aShape,50,50);
+	        	  linkOn = false;
+	        	  p1 = null;
 	           }
 	           else if (command.equals("End Point"))
 	           {
@@ -255,10 +292,27 @@ public class UserInterface2{
 	        	   endpoints.add(aEndPoint);
 //	        	   addShape(new RectShape(),10,30);
 	        	   addShape(aShape,10,30);
+	        	   linkOn = false;
+	        	   p1 = null;
+	           }
+	           else if (command.equals("Link"))
+	           {
+	        	   System.out.println("Pressed Link: Link On = " + linkOn);
+	        	   linkOn = true;
+	        	   if(connectionMade)
+	        	   {
+	        		   Shape aShape = new SolidLine(10, 10, 10, 10);
+	        		   addShape(aShape, 10, 10);
+	        		   connectionMade = false;
+	        	   }
+	        	   
 	           }
 	           else if (command.equals("Delete"))
 	           {
 	        	   System.out.println("Pressed Delete");
+	        	   linkOn = false;
+	        	   p1 = null;
+	        	   System.out.println("Element clicked on is: " + elementClickedOn.getClass().getSimpleName());
 	        	   if(elementClickedOn != null)
 	        	   {
 	        		   deleteElement();
@@ -280,6 +334,10 @@ public class UserInterface2{
 		void deleteElement()
 		{
 			System.out.println("Want to delete the currrently selected item: " + elementClickedOn.getClass().getSimpleName());
+			for(int index = 0; index < shapes.size(); index++)
+			{
+				System.out.println(shapes.get(index).getClass().getSimpleName());
+			}
 			for(int index = 0; index < shapes.size(); index++)
 			{
 				if(shapes.get(index).getClass().getSimpleName().equals(elementClickedOn.getClass().getSimpleName()))
@@ -359,6 +417,7 @@ public class UserInterface2{
 		}
 
 		@Override
+		// Mouse clicked and released
 		public void mouseClicked(MouseEvent evt) {
 			// User has released the mouse. Move the dragged shape, then set
 			// shapeBeingDragged to null to indicate that dragging is over.
@@ -367,10 +426,12 @@ public class UserInterface2{
 			// it back onscreen).
 			int x = evt.getX();
 			int y = evt.getY();
+			
+			// Draw all the shapes
 			for (int i = shapes.size() - 1; i >= 0; i--) { // check shapes from front to back
 				Shape s = (Shape) shapes.get(i);
 				if (s.containsPoint(x, y)) {
-					elementClickedOn = s;
+					elementClickedOn = s;	// Set element clicked on
 				}
 			}
 						
@@ -390,6 +451,38 @@ public class UserInterface2{
 				repaint();
 			}
 			
+			System.out.println("Link On in MouseClicked Method = " + linkOn);
+			if(linkOn && elementClickedOn != null)
+			{
+				// Drawing line
+				System.out.println("Line drawn: " + lineDrawn);
+	            if(p1 == null || lineDrawn){
+	                if(lineDrawn){
+	                    p1 = null;
+	                    p2 = null;
+	                    lineDrawn = false;
+	                }
+	                p1 = evt.getPoint();
+	                System.out.println("P1: " + "("+ p1.x +","+ p1.y + ")" );
+	                aStoryLineNode1 = new StoryLineNode(aPos4);
+	                elementClickedOn = null;
+	            }
+	            else
+	            {
+	                p2 = evt.getPoint();
+	                System.out.println("P2: " + "("+ p2.x +","+ p2.y + ")" );
+	                aStoryLineNode2 = new StoryLineNode(aPos4);
+	                Shape aShape = new SolidLine(10,10,10,10);
+	                connectionMade = true;
+	                StoryLineNodeConnection connect = new StoryLineNodeConnection(aPos4, p1, p2, aShape, aStoryLineNode2, aStoryLineNode1);
+	                storylineconnection.add(connect);
+	                repaint(); 					// paint the line connections
+	    			linkOn = false;				// set linkOn to false because line is already drawn
+	    			lineDrawn = true; 			// set lineDrawn to true to indicate line was drawn
+	    			aStoryLineNode1 = null;		// set the storylinenode back to null
+	    			aStoryLineNode1 = null;		// set the storylinenode back to null
+	            }
+			}
 		}
 
 		@Override

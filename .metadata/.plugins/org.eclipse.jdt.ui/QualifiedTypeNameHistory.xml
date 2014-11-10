@@ -2,9 +2,19 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="GUI.UserInterface.RoundRectShape"/>
 <fullyQualifiedTypeName name="concretecode.RoundRectShape"/>
-<fullyQualifiedTypeName name="concretecode.Shape"/>
 <fullyQualifiedTypeName name="concretecode.Mission"/>
 <fullyQualifiedTypeName name="concretecode.Position"/>
 <fullyQualifiedTypeName name="concretecode.ReturnPoint"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="concretecode.RectShape"/>
+<fullyQualifiedTypeName name="concretecode.EndPoint"/>
+<fullyQualifiedTypeName name="concretecode.StartPoint"/>
+<fullyQualifiedTypeName name="dnd.ShapeDraw.Shape"/>
+<fullyQualifiedTypeName name="concretecode.Shape"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+<fullyQualifiedTypeName name="concretecode.StoryLineNodeConnection"/>
+<fullyQualifiedTypeName name="concretecode.SolidLine"/>
+<fullyQualifiedTypeName name="java.awt.Graphics2D"/>
+<fullyQualifiedTypeName name="concretecode.StoryLineNode"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

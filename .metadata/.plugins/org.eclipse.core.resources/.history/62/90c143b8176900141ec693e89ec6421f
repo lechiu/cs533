@@ -1,0 +1,100 @@
+class StartPoint
+{
+	0..1 startPoint -> 0..1 Condition precondition;
+	1 startPoint -- * InBinding inBindings;
+	isA StoryLineNode;
+}
+
+class Condition
+{
+	expression;
+}
+
+class InBinding
+{
+}
+
+class Binding
+{
+	1 binding -- * InBinding inBindings;
+	1 binding -- * OutBinding outBindings;
+	autounique bindingId;
+}
+
+class OutBinding
+{
+}
+
+class EndPoint
+{
+	1 endpoint -- * OutBinding outBindings;
+	1 endpoint -> 0..1 Condition postcondition;
+	isA StoryLineNode;
+}
+
+class OpenEndPoint
+{
+	isA EndPoint;
+}
+
+class Mission
+{
+	1 mission -> * Binding bindings;
+	1 mission -- 1 ReturnPoint returnPoint;
+	isA StoryLineNode;
+	description;
+	Boolean isDynamic = false; 
+}
+
+class ReturnPoint
+{
+	isA StoryLineNode;
+}
+
+class Trigger
+{
+	1 trigger -- 1 Mission mission;
+	isA StoryLineNode;
+}
+
+class ChoicePoint
+{
+	isA StoryLineNode;
+}
+
+class ChoicePoinJoin
+{
+	isA StoryLineNode;
+}
+
+class MissionTask
+{
+	isA StoryLineNode;
+}
+
+class ParallelFork
+{
+	isA StoryLineNode;
+}
+
+class StoryLineNode
+{
+	1 target -- 1 StoryLineNodeConnection predecessor;
+	1 source -- 1 StoryLineNodeConnection successor;
+	autounique storyLineNodeid;
+}
+
+class StoryLineNodeConnection
+{
+class StoryLineNodeConnection
+{
+	depend java.awt.Point;
+	isA StoryLineNode;
+	1 StoryLineNodeConnection -> 1 Shape;
+	Point p1;
+	Point p2;
+	autounique storyLineNodeConnectionId;	
+}	
+}
+
+

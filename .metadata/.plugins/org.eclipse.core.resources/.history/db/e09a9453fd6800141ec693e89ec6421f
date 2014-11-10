@@ -1,0 +1,42 @@
+package concretecode;
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+// line 43 "gameplotconcrete.ump"
+public class RectShape extends Shape
+{
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public RectShape(int aShapeId, int aLeft, int aTop, int aWidth, int aHeight)
+  {
+    super(aShapeId, aLeft, aTop, aWidth, aHeight);
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public void delete()
+  {
+    super.delete();
+  }
+
+  // line 49 "gameplotconcrete.ump"
+  public void draw(Graphics g){
+    g.setColor(Color.black);
+		g.fillRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+		g.drawRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
+  }
+
+}
