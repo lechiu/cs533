@@ -480,9 +480,13 @@ public class UserInterface4{
 		int prevDragX; 	
 		int prevDragY;
 	      
-		// Cite
-		// User has moved the mouse. Move the dragged shape by the same
-		// amount.
+		// User has pressed the mouse. Find the shape that the user has
+		// clicked on, if
+		// any. If there is a shape at the position when the mouse was
+		// clicked, then
+		// start dragging it. If the user was holding down the shift key,
+		// then bring
+		// the dragged shape to the front, in front of all the other shapes.
 		@Override
 		public void mouseDragged(MouseEvent evt) {
 			int x = evt.getX();
@@ -495,8 +499,18 @@ public class UserInterface4{
 			}
 		}//end mouse dragged
 
+		// User has moved the mouse. Move the dragged shape by the same
+		// amount.
 		@Override
 		public void mouseMoved(MouseEvent evt) {
+//			int x = evt.getX();
+//			int y = evt.getY();
+//			if (shapeBeingDragged != null) {
+//				shapeBeingDragged.moveBy(x - prevDragX, y - prevDragY);
+//				prevDragX = x;
+//				prevDragY = y;
+//				repaint(); 			// redraw canvas to show shape in new position
+//			}
 		}
 		
 		@Override
@@ -579,11 +593,51 @@ public class UserInterface4{
 	        		aStoryLineNode2 = null;
 	        	}
 			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent evt) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent evt) {
+			
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent evt) {
+			// TODO Auto-generated method stub
+			int x = evt.getX(); 							// x-coordinate of point where mouse was clicked
+			int y = evt.getY(); 							// y-coordinate of point
+			for (int i = shapes.size() - 1; i >= 0; i--) { 	// check shapes from
+															// front to back
+				Shape s = (Shape) shapes.get(i);
+				if (s.containsPoint(x, y)) 
+				{
+					System.out.println(s.getClass().getSimpleName());
+					shapeBeingDragged = s;
+					prevDragX = x;
+					prevDragY = y;
+					if (evt.isShiftDown())
+					{ 										// Bring the shape to the front by
+															// moving it to
+						shapes.remove(s); 					// the end of the list of shapes.
+						shapes.add(s);
+						repaint(); 							// repaint canvas to show shape in front of
+															// other shapes
+					}
+					return;
+				}
+			}//end for
 			
 			Shape aShape = null;
 			String classname = "";
-//			int x = evt.getX(); // x-coordinate of point where mouse was clicked
-//			int y = evt.getY(); // y-coordinate of point
+			int x = evt.getX(); // x-coordinate of point where mouse was clicked
+			int y = evt.getY(); // y-coordinate of point
 			for (int i = shapes.size() - 1; i >= 0; i--) { 
 				Shape s = (Shape) shapes.get(i);
 				if (s.containsPoint(x, y)) {
@@ -630,52 +684,6 @@ public class UserInterface4{
 //					}
 				}
 	        }
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent evt) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent evt) {
-			
-			// TODO Auto-generated method stub
-			
-		}
-
-		// User has pressed the mouse. Find the shape that the user has
-		// clicked on, if
-		// any. If there is a shape at the position when the mouse was
-		// clicked, then
-		// start dragging it. If the user was holding down the shift key,
-		// then bring
-		// the dragged shape to the front, in front of all the other shapes.
-		@Override
-		public void mousePressed(MouseEvent evt) {
-			int x = evt.getX(); 							// x-coordinate of point where mouse was clicked
-			int y = evt.getY(); 							// y-coordinate of point
-			for (int i = shapes.size() - 1; i >= 0; i--) { 	// check shapes from
-															// front to back
-				Shape s = (Shape) shapes.get(i);
-				if (s.containsPoint(x, y)) 
-				{
-					System.out.println(s.getClass().getSimpleName());
-					shapeBeingDragged = s;
-					prevDragX = x;
-					prevDragY = y;
-					if (evt.isShiftDown())
-					{ 										// Bring the shape to the front by
-															// moving it to
-						shapes.remove(s); 					// the end of the list of shapes.
-						shapes.add(s);
-						repaint(); 							// repaint canvas to show shape in front of
-															// other shapes
-					}
-					return;
-				}
-			}//end for
 		}
 
 		@Override

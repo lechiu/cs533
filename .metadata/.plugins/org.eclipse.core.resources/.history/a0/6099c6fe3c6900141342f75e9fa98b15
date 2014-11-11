@@ -665,14 +665,14 @@ public class UserInterface4{
 					shapeBeingDragged = s;
 					prevDragX = x;
 					prevDragY = y;
-					if (evt.isShiftDown())
-					{ 										// Bring the shape to the front by
-															// moving it to
-						shapes.remove(s); 					// the end of the list of shapes.
-						shapes.add(s);
-						repaint(); 							// repaint canvas to show shape in front of
-															// other shapes
-					}
+//					if (evt.isShiftDown())
+//					{ 										// Bring the shape to the front by
+//															// moving it to
+//						shapes.remove(s); 					// the end of the list of shapes.
+//						shapes.add(s);
+//						repaint(); 							// repaint canvas to show shape in front of
+//															// other shapes
+//					}
 					return;
 				}
 			}//end for

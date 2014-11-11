@@ -676,6 +676,57 @@ public class UserInterface4{
 					return;
 				}
 			}//end for
+			
+//			Shape aShape = null;
+//			String classname = "";
+////			int x = evt.getX(); // x-coordinate of point where mouse was clicked
+////			int y = evt.getY(); // y-coordinate of point
+//			for (int i = shapes.size() - 1; i >= 0; i--) { 
+//				Shape s = (Shape) shapes.get(i);
+//				if (s.containsPoint(x, y)) {
+//					aShape = s;
+//					classname = aShape.getClass().getSimpleName();
+//				}
+//			}
+//			
+//			if(evt.getClickCount() == 2 && classname.equals("RoundRectShape"))
+//			{
+//				Mission m = null;
+//				String description = " ";
+//				for(int i = 0; i < missions.size(); i++)
+//				{
+//					m = (Mission) missions.get(i);
+//					Shape s = m.getShape();
+//					if(s == aShape)
+//					{
+//						description = JOptionPane.showInputDialog("Description: " + m.getDescription());
+//						break;
+//					}
+//				}
+//				
+//				if(description == null)
+//				{
+//					System.out.println("Pressed cancel");
+//				}
+//				else
+//				{
+//					JOptionPane.showMessageDialog(aFrame, "Description Succesfully Updated!");
+//					for(int j = 0; j < missions.size(); j++)
+//					{
+//						m = (Mission) missions.get(j);
+//						Shape s = m.getShape();
+//						if(s == aShape)
+//						{
+//							m.setDescription(description);
+//						}
+//					}
+//					// To check all messages of each Mission
+////					for(int j = missions.size() - 1; j >= 0; j--)
+////					{
+////						System.out.println("Index "+ j + "Description: " + missions.get(j).getDescription());
+////					}
+//				}
+//	        }
 		}
 
 		@Override
