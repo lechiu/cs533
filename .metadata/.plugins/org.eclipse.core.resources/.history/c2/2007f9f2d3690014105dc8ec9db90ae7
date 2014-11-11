@@ -12,13 +12,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -27,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import model.Model;
 import concretecode.EndPoint;
 import concretecode.Mission;
 import concretecode.OvalShape;
@@ -411,9 +416,6 @@ public class UserInterface4{
 		return aData;
 	}
 	
-	/*
-	 * Adapted from: David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java
-	 */
 	static class ShapeCanvas extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 		public ArrayList<StoryLineNode> aListOfNodes = new ArrayList<StoryLineNode>();
 		public ArrayList<Mission> missions = new ArrayList<Mission>();
@@ -696,7 +698,7 @@ public class UserInterface4{
 			repaint();					// update the canvas after deleting element
 		}
 		
-		// David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java
+		
 		// -------------------- This rest of this class implements dragging
 		// ----------------------
 		// This is null unless a shape is being dragged. A non-null value is used as a signal

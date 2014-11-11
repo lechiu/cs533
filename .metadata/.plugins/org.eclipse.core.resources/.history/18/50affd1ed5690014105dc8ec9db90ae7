@@ -412,7 +412,7 @@ public class UserInterface4{
 	}
 	
 	/*
-	 * Adapted from: David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java
+	 * 
 	 */
 	static class ShapeCanvas extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 		public ArrayList<StoryLineNode> aListOfNodes = new ArrayList<StoryLineNode>();
@@ -696,7 +696,7 @@ public class UserInterface4{
 			repaint();					// update the canvas after deleting element
 		}
 		
-		// David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java
+		
 		// -------------------- This rest of this class implements dragging
 		// ----------------------
 		// This is null unless a shape is being dragged. A non-null value is used as a signal
