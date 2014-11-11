@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 266 "gameplotconcrete.ump"
+// line 267 "gameplotconcrete.ump"
 public class Label
 {
 

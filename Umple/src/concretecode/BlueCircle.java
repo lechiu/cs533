@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 255 "gameplotconcrete.ump"
+// line 256 "gameplotconcrete.ump"
 public class BlueCircle
 {
 

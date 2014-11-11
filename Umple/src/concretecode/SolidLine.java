@@ -57,15 +57,19 @@ public class SolidLine extends Shape
     Graphics2D g2 = (Graphics2D) g.create();
       	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       	g2.setColor(Color.BLACK);
-      	g2.setStroke(new BasicStroke(10));
+      	g2.setStroke(new BasicStroke(8));
       	g2.fillRect(2,2,2,2);
 	  	g2.drawLine(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
   }
 
-  // line 242 "gameplotconcrete.ump"
+
+  /**
+   * Check whether (x,y) is inside the first point of line.
+   */
+  // line 243 "gameplotconcrete.ump"
   public boolean containsPoint(int x, int y){
-    // Check whether (x,y) is inside the first point of line.
-		if (x >= this.getLeft() && x < this.getLeft() + 10 && y >= this.getTop() && y < this.getTop() + 10)
+    //	  	if (x >= this.getLeft() && x < this.getLeft() + 10 && y >= this.getTop() && y < this.getTop() + 10)
+		if ((x >= this.getLeft() - 10 && x <= this.getLeft() + 10 && y >= this.getTop() - 10 && y <= this.getTop() + 10) || (x >= this.getWidth() - 10 && x <= this.getWidth() + 10 && y >= this.getHeight() - 10 && y <= this.getHeight() + 10))
 			return true;
 		else
 			return false;

@@ -4,7 +4,7 @@ package concretecode;
 
 
 
-// line 260 "gameplotconcrete.ump"
+// line 261 "gameplotconcrete.ump"
 public class XSymbol
 {
 
