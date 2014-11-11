@@ -729,7 +729,6 @@ public class UserInterface4{
 		}
 		
 		@Override
-		// Cite
 		// Mouse clicked and released
 		// User has released the mouse. Move the dragged shape, then set
 		// shapeBeingDragged to null to indicate that dragging is over.
@@ -875,7 +874,6 @@ public class UserInterface4{
 			
 		}
 
-		// Cite
 		// User has pressed the mouse. Find the shape that the user has
 		// clicked on, if
 		// any. If there is a shape at the position when the mouse was

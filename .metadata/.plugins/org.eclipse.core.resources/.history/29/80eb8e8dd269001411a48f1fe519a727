@@ -303,6 +303,12 @@ public class UserInterface4{
 			public void actionPerformed(ActionEvent pEvent){
 				logger.info("Selected Export");
 				
+<<<<<<< HEAD
+				ArrayList<Mission> missions = canvas.missions;
+				ArrayList<EndPoint> endpoints = canvas.endpoints;
+				ArrayList<StartPoint> startpoints = canvas.startpoints;
+=======
+>>>>>>> 11b9b92e9bbabe6e611cb1fd6dbe1fa2ff199bfd
 				ArrayList<StoryLineNode> aListOfNodes = canvas.aListOfNodes;
 				
 				ArrayList<JSONObject> objectlist = new ArrayList<JSONObject>();
@@ -729,7 +735,7 @@ public class UserInterface4{
 		}
 		
 		@Override
-		// Cite
+		// Cite Mouse released
 		// Mouse clicked and released
 		// User has released the mouse. Move the dragged shape, then set
 		// shapeBeingDragged to null to indicate that dragging is over.
@@ -874,7 +880,7 @@ public class UserInterface4{
 			// TODO Auto-generated method stub
 			
 		}
-
+		
 		// Cite
 		// User has pressed the mouse. Find the shape that the user has
 		// clicked on, if
