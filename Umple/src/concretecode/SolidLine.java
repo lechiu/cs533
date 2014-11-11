@@ -67,6 +67,7 @@ public class SolidLine extends Shape
    * Check whether (x,y) is inside the first point of line.
    */
   // line 243 "gameplotconcrete.ump"
+  @Override
   public boolean containsPoint(int x, int y){
     //	  	if (x >= this.getLeft() && x < this.getLeft() + 10 && y >= this.getTop() && y < this.getTop() + 10)
 		if ((x >= this.getLeft() - 10 && x <= this.getLeft() + 10 && y >= this.getTop() - 10 && y <= this.getTop() + 10) || (x >= this.getWidth() - 10 && x <= this.getWidth() + 10 && y >= this.getHeight() - 10 && y <= this.getHeight() + 10))
