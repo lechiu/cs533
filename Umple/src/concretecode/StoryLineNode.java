@@ -47,6 +47,12 @@ public class StoryLineNode
   // INTERFACE
   //------------------------
 
+  //added set method robin
+  public void setStoryLineNodeid(int id)
+  {
+	  storyLineNodeid = id;
+  }
+  
   public int getStoryLineNodeid()
   {
     return storyLineNodeid;

@@ -113,7 +113,7 @@ class StoryLineNode
 	1 source -- * StoryLineNodeConnection successor;
 	1  -> 1 Position;
     1 -> Label;
-	autounique storyLineNodeid;
+	Integer storyLineNodeid;
 }
 
 class StoryLineNodeConnection

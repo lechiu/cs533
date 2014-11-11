@@ -12,7 +12,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -39,6 +43,11 @@ import concretecode.StartPoint;
 import concretecode.StoryLineNode;
 import concretecode.StoryLineNodeConnection;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  * @author LennyChiu
  *
@@ -62,14 +71,16 @@ public class UserInterface4{
 	 */
 	public static void build()
 	{
-		JMenuBar aMenuPanel = new JMenuBar();
-		JMenu aData = dataMenu();
-		aFrame.setJMenuBar(aMenuPanel);
-		
-		aMenuPanel.add(aData);
+
 		
 		//added code robin
 		ShapeCanvas canvas = new ShapeCanvas();// create the canvas
+		
+		JMenuBar aMenuPanel = new JMenuBar();
+		JMenu aData = dataMenu(canvas);
+		aFrame.setJMenuBar(aMenuPanel);
+		
+		aMenuPanel.add(aData);
 		
   		rightPanel = canvas;// change this to the canvas
 		leftPanel = createPalette(canvas);
@@ -115,7 +126,7 @@ public class UserInterface4{
 	/**
 	 * @return A file menu with the option to load or save a model.
 	 */
-	private static JMenu dataMenu()
+	private static JMenu dataMenu(final ShapeCanvas canvas)
 	{
 		JMenu aData = new JMenu("File");
 		aData.setMnemonic(KeyEvent.VK_D);
@@ -125,25 +136,32 @@ public class UserInterface4{
 		lLoaddisk.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
+			public void actionPerformed(ActionEvent pEvent){
 				logger.info("Selected Load from Disk");
-				JFileChooser aFc = new JFileChooser();
-				aFc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-				File location = new File(System.getProperty("user.home"));
 				
-				aFc.setCurrentDirectory(location);
-				int value = aFc.showOpenDialog(lLoaddisk);
-				if(value == JFileChooser.APPROVE_OPTION)
-				{
-					File dataLocation = aFc.getSelectedFile();
-					// Need to implement.
-				}
-				else
-				{
-					logger.info("Load from Disk command cancelled by user.");
-				}
 			}
+			
+					
+//			@Override
+//			public void actionPerformed(ActionEvent pEvent)
+//			{
+//				logger.info("Selected Load from Disk");
+//				JFileChooser aFc = new JFileChooser();
+//				aFc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+//				File location = new File(System.getProperty("user.home"));
+//				
+//				aFc.setCurrentDirectory(location);
+//				int value = aFc.showOpenDialog(lLoaddisk);
+//				if(value == JFileChooser.APPROVE_OPTION)
+//				{
+//					File dataLocation = aFc.getSelectedFile();
+//					// Need to implement.
+//				}
+//				else
+//				{
+//					logger.info("Load from Disk command cancelled by user.");
+//				}
+//			}
 		});
 		aData.add(lLoaddisk);
 		
@@ -152,56 +170,117 @@ public class UserInterface4{
 		lExport.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent pEvent)
-			{
+			public void actionPerformed(ActionEvent pEvent){
 				logger.info("Selected Export");
-				JFileChooser aExportChooser = new JFileChooser();
-				aExportChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				File location = new File(System.getProperty("user.home"));
-
-				aExportChooser.setCurrentDirectory(location);
-				int value = aExportChooser.showSaveDialog(lExport);
-				if (value == JFileChooser.APPROVE_OPTION) 
-				{
-					// Need to implement.
-					try
-					{
-						File dataLocation = aExportChooser.getSelectedFile();
-						String newPath = dataLocation.getAbsolutePath()+ File.separator;
-						logger.info("Saving User Profile to disk location: " + newPath);
-						for (int j = 0; j < 8; j++)
-						{
-							trial = new Integer(8);
-						}
+				
+//				ArrayList<Mission> missions = canvas.missions;
+//				ArrayList<EndPoint> endpoints = canvas.endpoints;
+//				ArrayList<StartPoint> startpoints = canvas.startpoints;
+				ArrayList<StoryLineNode> aListOfNodes = canvas.aListOfNodes;
+				
+				ArrayList<JSONObject> missionlist = new ArrayList<JSONObject>();
+				ArrayList<JSONObject> startPointlist = new ArrayList<JSONObject>();
+				ArrayList<JSONObject> endPointlist = new ArrayList<JSONObject>();
+				
+				for(int i = 0; i<aListOfNodes.size();i++){
+				
+					StoryLineNode node = aListOfNodes.get(i);
+					int id = node.getStoryLineNodeid();
+					int left,top = 10;
+					String description = null;
+					
+					if(node instanceof Mission){
+						Mission m = (Mission) node;
+						left = m.getShape().getLeft();
+						top = m.getShape().getTop();
+						description = m.getDescription();
+						
+						//write to the JSON
+						JSONObject mObj = new JSONObject();
+						mObj.put("id", id);
+						mObj.put("left", left);
+						mObj.put("top", top);
+						mObj.put("description", description);
+						
+						missionlist.add(mObj);
 					}
-					catch(NullPointerException e)
-					{
-						logger.warning("Error exporting file.");
+					else if(node instanceof StartPoint){
+						
+					}
+					else if(node instanceof EndPoint){
+						
 					}
 					
-					Model m = new Model();
-					m.persist(trial, aExportChooser.getSelectedFile().toString());
-				    File fileToSave = aExportChooser.getCurrentDirectory();
-					String aPath = fileToSave.getAbsolutePath();
-					logger.info("Save file to " + fileToSave.getAbsolutePath());
-				}
-		        else 
-		        {
-		        	logger.info("Save/Export command cancelled by user.");
-		        }
+					try{
+						FileWriter file =  new FileWriter("mission.json");
+						for (int midx = 0; midx <missionlist.size();midx++){
+							file.write(missionlist.get(midx).toJSONString());
+							file.flush();
+						}
+						file.close();
+						
+					} catch (IOException e){
+						System.out.println("do nothing");
+					}
+
+				}// end for
+				
+
 			}
+
+//			@Override
+//			public void actionPerformed(ActionEvent pEvent)
+//			{
+//				logger.info("Selected Export");
+//				JFileChooser aExportChooser = new JFileChooser();
+//				aExportChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//				File location = new File(System.getProperty("user.home"));
+//
+//				aExportChooser.setCurrentDirectory(location);
+//				int value = aExportChooser.showSaveDialog(lExport);
+//				if (value == JFileChooser.APPROVE_OPTION) 
+//				{
+//					// Need to implement.
+//					try
+//					{
+//						File dataLocation = aExportChooser.getSelectedFile();
+//						String newPath = dataLocation.getAbsolutePath()+ File.separator;
+//						logger.info("Saving User Profile to disk location: " + newPath);
+//						for (int j = 0; j < 8; j++)
+//						{
+//							trial = new Integer(8);
+//						}
+//					}
+//					catch(NullPointerException e)
+//					{
+//						logger.warning("Error exporting file.");
+//					}
+//					
+//					Model m = new Model();
+//					m.persist(trial, aExportChooser.getSelectedFile().toString());
+//				    File fileToSave = aExportChooser.getCurrentDirectory();
+//					String aPath = fileToSave.getAbsolutePath();
+//					logger.info("Save file to " + fileToSave.getAbsolutePath());
+//				}
+//		        else 
+//		        {
+//		        	logger.info("Save/Export command cancelled by user.");
+//		        }
+//			}// end of action performed
+			
+			
 		});
 		aData.add(lExport);
 		return aData;
 	}
 	
 	static class ShapeCanvas extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
-		ArrayList<StoryLineNode> aListOfNodes = new ArrayList<StoryLineNode>();
-		ArrayList<Mission> missions = new ArrayList<Mission>();
-		ArrayList<EndPoint> endpoints = new ArrayList<EndPoint>();
-		ArrayList<StartPoint> startpoints = new ArrayList<StartPoint>();
-		ArrayList<StoryLineNodeConnection> storylineconnection = new ArrayList<StoryLineNodeConnection>();	// Used to store the sequence of nodes connected with each other
-		ArrayList<Shape> shapes = new ArrayList<Shape>(); 	//holds the list of shapes that are displayed on the canvas
+		public ArrayList<StoryLineNode> aListOfNodes = new ArrayList<StoryLineNode>();
+		public ArrayList<Mission> missions = new ArrayList<Mission>();
+		public ArrayList<EndPoint> endpoints = new ArrayList<EndPoint>();
+		public ArrayList<StartPoint> startpoints = new ArrayList<StartPoint>();
+		public ArrayList<StoryLineNodeConnection> storylineconnection = new ArrayList<StoryLineNodeConnection>();	// Used to store the sequence of nodes connected with each other
+		public ArrayList<Shape> shapes = new ArrayList<Shape>(); 	//holds the list of shapes that are displayed on the canvas
 		Color currentColor = Color.black;
 		Shape elementClickedOn = null; 						// records the last element you clicked on
 		StoryLineNode aStoryLineNode1 = null;
@@ -308,11 +387,17 @@ public class UserInterface4{
 	        		System.out.println("Pressed Delete");
 	        		linkOn = false;
 	        		p1 = null;
-	        		System.out.println("Element clicked on is: " + elementClickedOn.getClass().getSimpleName());
+	        		try{
+	        			System.out.println("Element clicked on is: " + elementClickedOn.getClass().getSimpleName());
+	        		}catch (Exception e){
+	        			System.out.println("nothing was clicked on");
+	        		}
+	        		
 	        		if(elementClickedOn != null)
 	        		{
 	        			deleteElement();
 	        		}
+
 	        	}
          	}
 		
