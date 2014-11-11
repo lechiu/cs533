@@ -11,8 +11,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -126,11 +128,49 @@ public class UserInterface4{
 	/**
 	 * @return A file menu with the option to load or save a model.
 	 */
+	private static void canvasClear(ShapeCanvas canvas){
+		//clear shit
+		canvas.aListOfNodes.clear();
+		canvas.missions.clear();
+		canvas.endpoints.clear();
+		canvas.startpoints.clear();
+		canvas.storylineconnection.clear();
+		canvas.shapes.clear();
+		
+		canvas.elementClickedOn = null; 						// records the last element you clicked on
+		canvas.aStoryLineNode1 = null;
+		canvas.aStoryLineNode2 = null;
+		canvas.p1 = null;
+        canvas.p2 = null;
+        canvas.lineDrawn = false;
+		canvas.linkOn = false;
+		canvas.connectionMade = false;
+
+		canvas.clickedOn = null;
+		canvas.aSourcePosition = null;
+		canvas.aTargetPosition = null;
+		
+		canvas.repaint();
+		System.out.println("canvas cleared");
+	}
+	
 	private static JMenu dataMenu(final ShapeCanvas canvas)
 	{
 		JMenu aData = new JMenu("File");
 		aData.setMnemonic(KeyEvent.VK_D);
 
+
+		final JMenuItem clearstuff = new JMenuItem("Clear");
+		clearstuff.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
+		clearstuff.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent pEvent){
+				canvasClear(canvas);
+			}
+		});
+		
+		aData.add(clearstuff);
+		
 		final JMenuItem lLoaddisk = new JMenuItem("Load from Disk");
 		lLoaddisk.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
 		lLoaddisk.addActionListener(new ActionListener()
@@ -138,6 +178,96 @@ public class UserInterface4{
 			@Override
 			public void actionPerformed(ActionEvent pEvent){
 				logger.info("Selected Load from Disk");
+				
+				try {
+					
+					canvasClear(canvas);
+					
+					
+					BufferedReader br = new BufferedReader(new FileReader("object.json"));
+					String line = null;
+					JSONParser parser = new JSONParser();
+					
+					//dummy stuff
+					Position aInitializing = new Position(8, 8);	/**/
+					// We are not implementing Return Point, so we needed a dummy object to represent it.
+					Position aReturnPointPosition = new Position(9, 9);
+					ReturnPoint aReturnPoint = new ReturnPoint(aReturnPointPosition);
+
+
+					while ((line = br.readLine()) != null) {
+						System.out.println(line);
+						
+						Object obj = parser.parse(line);			
+						JSONObject jsonObject = (JSONObject) obj;			
+						
+						int id = ((Long) jsonObject.get("id")).intValue();
+						int left =  ((Long) jsonObject.get("left")).intValue();
+						int top =  ((Long) jsonObject.get("top")).intValue();
+						String type = (String) jsonObject.get("class");
+						
+						System.out.println("got so far");
+						if (type.equals("mission")){
+							String description = (String) jsonObject.get("description");
+							
+							// add the stuff
+							Shape aShape = new RoundRectShape(left, top, 50, 50);
+			        		StoryLineNode aStoryMission = new Mission(aInitializing, aReturnPoint, aShape);
+			        		aStoryMission.setStoryLineNodeid(id);
+			        		Mission aMission = (Mission) aStoryMission;
+			        		aMission.setDescription(description);
+			        		aMission.getShape().setShapeId(aStoryMission.getStoryLineNodeid());
+			        		aShape.setShapeId(aStoryMission.getStoryLineNodeid());
+			        		canvas.aListOfNodes.add(aMission);
+			        		canvas.missions.add(aMission);
+			        		
+			        		canvas.addShape(aShape);
+			        		canvas.linkOn = false;
+			        		canvas.p1 = null;
+							
+						}
+						else if (type.equals("start")){
+							
+							Shape aShape = new OvalShape(left, top, 30, 30);
+			        		StoryLineNode aStoryStartPoint = new StartPoint(aInitializing, aShape);
+			        		aStoryStartPoint.setStoryLineNodeid(id);
+			        		StartPoint aStartPoint = (StartPoint) aStoryStartPoint;
+			        		aStartPoint.getShape().setShapeId(aStoryStartPoint.getStoryLineNodeid());
+			        		aShape.setShapeId(aStoryStartPoint.getStoryLineNodeid());
+			        		canvas.aListOfNodes.add(aStartPoint);
+			        		canvas.startpoints.add(aStartPoint);
+			        		
+			        		canvas.addShape(aShape);
+			        		canvas.linkOn = false;
+			        		canvas.p1 = null;
+						}
+						else if (type.equals("end")){
+							Shape aShape = new RectShape(left, top, 10, 30);
+			        		StoryLineNode aStoryEndPoint = new EndPoint(aInitializing, aShape);
+			        		aStoryEndPoint.setStoryLineNodeid(id);
+			        		EndPoint aEndPoint = (EndPoint) aStoryEndPoint;
+			        		aEndPoint.getShape().setShapeId(aStoryEndPoint.getStoryLineNodeid());
+			        		aShape.setShapeId(aStoryEndPoint.getStoryLineNodeid());
+			        		canvas.aListOfNodes.add(aEndPoint);
+			        		canvas.endpoints.add(aEndPoint);		        		
+			        		
+			        		canvas.addShape(aShape);
+			        		canvas.linkOn = false;
+			        		canvas.p1 = null;
+						}
+						
+
+
+						
+						
+						
+					}
+
+				} catch (Exception e) {
+					System.out.print("parse failed");
+				}
+				
+				
 				
 			}
 			
@@ -173,21 +303,21 @@ public class UserInterface4{
 			public void actionPerformed(ActionEvent pEvent){
 				logger.info("Selected Export");
 				
-//				ArrayList<Mission> missions = canvas.missions;
-//				ArrayList<EndPoint> endpoints = canvas.endpoints;
-//				ArrayList<StartPoint> startpoints = canvas.startpoints;
 				ArrayList<StoryLineNode> aListOfNodes = canvas.aListOfNodes;
 				
-				ArrayList<JSONObject> missionlist = new ArrayList<JSONObject>();
-				ArrayList<JSONObject> startPointlist = new ArrayList<JSONObject>();
-				ArrayList<JSONObject> endPointlist = new ArrayList<JSONObject>();
+				ArrayList<JSONObject> objectlist = new ArrayList<JSONObject>();
+
 				
 				for(int i = 0; i<aListOfNodes.size();i++){
 				
 					StoryLineNode node = aListOfNodes.get(i);
 					int id = node.getStoryLineNodeid();
-					int left,top = 10;
+					int left = 10;
+					int top = 10;
 					String description = null;
+					
+					//write to the JSON
+					JSONObject obj = new JSONObject();
 					
 					if(node instanceof Mission){
 						Mission m = (Mission) node;
@@ -195,38 +325,50 @@ public class UserInterface4{
 						top = m.getShape().getTop();
 						description = m.getDescription();
 						
-						//write to the JSON
-						JSONObject mObj = new JSONObject();
-						mObj.put("id", id);
-						mObj.put("left", left);
-						mObj.put("top", top);
-						mObj.put("description", description);
+						obj.put("class", "mission");
+
+						obj.put("description", description);
 						
-						missionlist.add(mObj);
+
 					}
 					else if(node instanceof StartPoint){
+						StartPoint s = (StartPoint) node;
+						left = s.getShape().getLeft();
+						top = s.getShape().getTop();
 						
+						obj.put("class", "start");
 					}
 					else if(node instanceof EndPoint){
+						EndPoint e = (EndPoint) node;
+						left = e.getShape().getLeft();
+						top = e.getShape().getTop();
 						
-					}
+						obj.put("class", "end");
+						
+					}// end
 					
-					try{
-						FileWriter file =  new FileWriter("mission.json");
-						for (int midx = 0; midx <missionlist.size();midx++){
-							file.write(missionlist.get(midx).toJSONString());
-							file.flush();
-						}
-						file.close();
-						
-					} catch (IOException e){
-						System.out.println("do nothing");
-					}
+					
+					//Make the JSON object
+					obj.put("id", new Integer(id));
+					obj.put("left", new Integer (left));
+					obj.put("top", new Integer (top));
+					objectlist.add(obj);
 
-				}// end for
+				}// end for of list of nodes
 				
+				try{
+					FileWriter file =  new FileWriter("object.json");
+					for (int midx = 0; midx <objectlist.size();midx++){
+						file.write(objectlist.get(midx).toJSONString()+"\n");
+						file.flush();
+					}
+					file.close();
+					
+				} catch (IOException e){
+					System.out.println("do nothing");
+				}
 
-			}
+			}// end action event
 
 //			@Override
 //			public void actionPerformed(ActionEvent pEvent)
@@ -315,6 +457,8 @@ public class UserInterface4{
 				Shape s = (Shape) shapes.get(i);
 				s.draw(g);
 			}
+			
+			System.out.println("number of shapes: " + top);
 		}
 		
         // Called to respond to action events.  The three shape-adding
