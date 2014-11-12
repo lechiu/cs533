@@ -122,6 +122,15 @@ public class Shape
   public void delete()
   {}
 
+  // line 172 "gameplotconcrete.ump"
+  public void reshape(int left, int top, int width, int height){
+    // Set the position and size of this shape.
+		this.left = left;
+		this.top = top;
+		this.width = width;
+		this.height = height;
+  }
+
   // line 180 "gameplotconcrete.ump"
   public void moveBy(int dx, int dy){
     // Move the shape by dx pixels horizontally and dy pixels vertically

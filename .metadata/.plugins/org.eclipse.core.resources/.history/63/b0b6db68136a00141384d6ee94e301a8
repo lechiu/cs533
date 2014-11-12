@@ -168,6 +168,14 @@ class Shape
 	Integer height;
 	Color color = Color.white;
 	
+	void reshape(int left, int top, int width, int height) {
+		// Set the position and size of this shape.
+		this.left = left;
+		this.top = top;
+		this.width = width;
+		this.height = height;
+	}
+	
 	void moveBy(int dx, int dy) {
 		// Move the shape by dx pixels horizontally and dy pixels vertically
 		// (by changing the position of the top-left corner of the shape).
