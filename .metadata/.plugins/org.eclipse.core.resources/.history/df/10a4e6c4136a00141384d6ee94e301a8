@@ -132,8 +132,12 @@ public class Shape
 
   // line 187 "gameplotconcrete.ump"
 //David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
-  // Check whether the shape contains the point (x,y).
   public boolean containsPoint(int x, int y){
+    // Check whether the shape contains the point (x,y).
+		// By default, this just checks whether (x,y) is inside the
+		// rectangle that bounds the shape.  This method should be
+		// overridden by a subclass if the default behavior is not
+		// appropriate for the subclass.
 		if (x >= left && x < left+width && y >= top && y < top+height)
 			return true;
 		else

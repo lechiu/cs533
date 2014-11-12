@@ -169,11 +169,18 @@ class Shape
 	Color color = Color.white;
 	
 	void moveBy(int dx, int dy) {
+		// Move the shape by dx pixels horizontally and dy pixels vertically
+		// (by changing the position of the top-left corner of the shape).
 	    left = left + dx;
 	    top = top + dy;
 	}
 
 	boolean containsPoint(int x, int y) {
+		// Check whether the shape contains the point (x,y).
+		// By default, this just checks whether (x,y) is inside the
+		// rectangle that bounds the shape.  This method should be
+		// overridden by a subclass if the default behavior is not
+		// appropriate for the subclass.
 		if (x >= left && x < left+width && y >= top && y < top+height)
 			return true;
 		else
