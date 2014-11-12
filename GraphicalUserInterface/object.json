@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 {"top":277,"left":302,"description":"","id":2,"class":"mission"}
 {"top":114,"left":166,"id":4,"class":"start"}
 {"top":264,"left":418,"description":"","id":6,"class":"mission"}
 {"top":497,"left":557,"id":8,"class":"end"}
+=======
+{"id":2,"description":"","class":"mission","left":259,"top":163}
+{"id":4,"class":"start","left":47,"top":195}
+{"id":18,"description":"","class":"mission","left":148,"top":87}
+>>>>>>> origin/master
