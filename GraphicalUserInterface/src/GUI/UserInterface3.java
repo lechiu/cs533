@@ -298,7 +298,6 @@ public class UserInterface3{
 		void addShape(Shape shape, int width, int height) 
 		{
 			shape.setColor(currentColor);
-			shape.reshape(10, 10, width, height);
 			shapes.add(shape);
 			repaint();
 		}
