@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -169,108 +171,134 @@ public class UserInterface4{
 			@Override
 			public void actionPerformed(ActionEvent pEvent){
 				logger.info("Selected Load from Disk");
+				logger.info("Selected Load from Disk");
 				try {
 					
-					canvasClear(canvas);
-					
-					
-					BufferedReader br = new BufferedReader(new FileReader("object.json"));
-					String line = null;
-					JSONParser parser = new JSONParser();
-					
-					//dummy stuff
-					Position aInitializing = new Position(8, 8);	/**/
-					// We are not implementing Return Point, so we needed a dummy object to represent it.
-					Position aReturnPointPosition = new Position(9, 9);
-					ReturnPoint aReturnPoint = new ReturnPoint(aReturnPointPosition);
+					JFileChooser aFc = new JFileChooser();
+					//aFc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);					
+					aFc.setCurrentDirectory(new File("user.home"));
+					int value = aFc.showOpenDialog(lLoaddisk);
+					if(value == JFileChooser.APPROVE_OPTION)
+					{
+						//file reading and canvas constructing part
+						canvasClear(canvas);
+						BufferedReader br = new BufferedReader(new FileReader(aFc.getSelectedFile()));
+						String line = null;
+						JSONParser parser = new JSONParser();
+						
+						//dummy stuff
+						Position aInitializing = new Position(8, 8);	/**/
+						// We are not implementing Return Point, so we needed a dummy object to represent it.
+						Position aReturnPointPosition = new Position(9, 9);
+						ReturnPoint aReturnPoint = new ReturnPoint(aReturnPointPosition);
 
 
-					while ((line = br.readLine()) != null) {
-						System.out.println(line);
-						
-						Object obj = parser.parse(line);			
-						JSONObject jsonObject = (JSONObject) obj;			
-						
-						int id = ((Long) jsonObject.get("id")).intValue();
-						int left =  ((Long) jsonObject.get("left")).intValue();
-						int top =  ((Long) jsonObject.get("top")).intValue();
-						String type = (String) jsonObject.get("class");
-						
-						System.out.println("got so far");
-						if (type.equals("mission")){
-							String description = (String) jsonObject.get("description");
+						while ((line = br.readLine()) != null) {
+							System.out.println(line);
 							
-							// add the stuff
-							Shape aShape = new RoundRectShape(left, top, 50, 50);
-			        		StoryLineNode aStoryMission = new Mission(aInitializing, aReturnPoint, aShape);
-			        		aStoryMission.setStoryLineNodeid(id);
-			        		Mission aMission = (Mission) aStoryMission;
-			        		aMission.setDescription(description);
-			        		aMission.getShape().setShapeId(aStoryMission.getStoryLineNodeid());
-			        		aShape.setShapeId(aStoryMission.getStoryLineNodeid());
-			        		canvas.aListOfNodes.add(aMission);
-			        		canvas.missions.add(aMission);
-			        		
-			        		canvas.addShape(aShape);
-			        		canvas.linkOn = false;
-			        		canvas.p1 = null;
+							Object obj = parser.parse(line);			
+							JSONObject jsonObject = (JSONObject) obj;			
 							
-						}
-						else if (type.equals("start")){
+							int id = ((Long) jsonObject.get("id")).intValue();
+							int left =  ((Long) jsonObject.get("left")).intValue();
+							int top =  ((Long) jsonObject.get("top")).intValue();
+							String type = (String) jsonObject.get("class");
 							
-							Shape aShape = new OvalShape(left, top, 30, 30);
-			        		StoryLineNode aStoryStartPoint = new StartPoint(aInitializing, aShape);
-			        		aStoryStartPoint.setStoryLineNodeid(id);
-			        		StartPoint aStartPoint = (StartPoint) aStoryStartPoint;
-			        		aStartPoint.getShape().setShapeId(aStoryStartPoint.getStoryLineNodeid());
-			        		aShape.setShapeId(aStoryStartPoint.getStoryLineNodeid());
-			        		canvas.aListOfNodes.add(aStartPoint);
-			        		canvas.startpoints.add(aStartPoint);
-			        		
-			        		canvas.addShape(aShape);
-			        		canvas.linkOn = false;
-			        		canvas.p1 = null;
-						}
-						else if (type.equals("end")){
-							Shape aShape = new RectShape(left, top, 10, 30);
-			        		StoryLineNode aStoryEndPoint = new EndPoint(aInitializing, aShape);
-			        		aStoryEndPoint.setStoryLineNodeid(id);
-			        		EndPoint aEndPoint = (EndPoint) aStoryEndPoint;
-			        		aEndPoint.getShape().setShapeId(aStoryEndPoint.getStoryLineNodeid());
-			        		aShape.setShapeId(aStoryEndPoint.getStoryLineNodeid());
-			        		canvas.aListOfNodes.add(aEndPoint);
-			        		canvas.endpoints.add(aEndPoint);		        		
-			        		
-			        		canvas.addShape(aShape);
-			        		canvas.linkOn = false;
-			        		canvas.p1 = null;
-						}
+							//System.out.println("got so far");
+							if (type.equals("mission")){
+								String description = (String) jsonObject.get("description");
+								
+								// add the stuff
+								Shape aShape = new RoundRectShape(left, top, 50, 50);
+				        		StoryLineNode aStoryMission = new Mission(aInitializing, aReturnPoint, aShape);
+				        		aStoryMission.setStoryLineNodeid(id);
+				        		Mission aMission = (Mission) aStoryMission;
+				        		aMission.setDescription(description);
+				        		aMission.getShape().setShapeId(aStoryMission.getStoryLineNodeid());
+				        		aShape.setShapeId(aStoryMission.getStoryLineNodeid());
+				        		canvas.aListOfNodes.add(aMission);
+				        		canvas.missions.add(aMission);
+				        		
+				        		canvas.addShape(aShape);
+				        		canvas.linkOn = false;
+				        		canvas.p1 = null;
+								
+							}
+							else if (type.equals("start")){
+								
+								Shape aShape = new OvalShape(left, top, 30, 30);
+				        		StoryLineNode aStoryStartPoint = new StartPoint(aInitializing, aShape);
+				        		aStoryStartPoint.setStoryLineNodeid(id);
+				        		StartPoint aStartPoint = (StartPoint) aStoryStartPoint;
+				        		aStartPoint.getShape().setShapeId(aStoryStartPoint.getStoryLineNodeid());
+				        		aShape.setShapeId(aStoryStartPoint.getStoryLineNodeid());
+				        		canvas.aListOfNodes.add(aStartPoint);
+				        		canvas.startpoints.add(aStartPoint);
+				        		
+				        		canvas.addShape(aShape);
+				        		canvas.linkOn = false;
+				        		canvas.p1 = null;
+							}
+							else if (type.equals("end")){
+								Shape aShape = new RectShape(left, top, 10, 30);
+				        		StoryLineNode aStoryEndPoint = new EndPoint(aInitializing, aShape);
+				        		aStoryEndPoint.setStoryLineNodeid(id);
+				        		EndPoint aEndPoint = (EndPoint) aStoryEndPoint;
+				        		aEndPoint.getShape().setShapeId(aStoryEndPoint.getStoryLineNodeid());
+				        		aShape.setShapeId(aStoryEndPoint.getStoryLineNodeid());
+				        		canvas.aListOfNodes.add(aEndPoint);
+				        		canvas.endpoints.add(aEndPoint);		        		
+				        		
+				        		canvas.addShape(aShape);
+				        		canvas.linkOn = false;
+				        		canvas.p1 = null;
+							}
+							else if (type.equals("link")){
+								int fromId = ((Long) jsonObject.get("fromId")).intValue();
+								int toId =  ((Long) jsonObject.get("toId")).intValue();
+								int posX =  ((Long) jsonObject.get("posX")).intValue();
+								int posY =  ((Long) jsonObject.get("posY")).intValue();
+								int p1X =  ((Long) jsonObject.get("p1X")).intValue();
+								int p1Y =  ((Long) jsonObject.get("p1Y")).intValue();
+								int p2X =  ((Long) jsonObject.get("p2X")).intValue();
+								int p2Y =  ((Long) jsonObject.get("p2Y")).intValue();
+								
+								Position nodePos = new Position(posX,posY);
+								Point point1 = new Point(p1X,p1Y);
+								Point point2 = new Point(p2X,p2Y);
+								StoryLineNode n1 = null;
+								StoryLineNode n2 = null;
+								
+				                for (StoryLineNode node : canvas.aListOfNodes ){
+				                	if (node.getStoryLineNodeid() == fromId){
+				                		n1 = node;
+				                	}
+				                	else if (node.getStoryLineNodeid() == toId){
+				                		n2 = node;
+				                	}
+				                }
+				                Shape aShape = new SolidLine(p1X,p1Y,p2X,p2Y);
+				                StoryLineNode aStoryLine = new StoryLineNodeConnection (nodePos, point1, point2, aShape,n2,n1);
+				                StoryLineNodeConnection connect = (StoryLineNodeConnection) aStoryLine;
+				        		connect.getShape().setShapeId(aStoryLine.getStoryLineNodeid());
+				        		aShape.setShapeId(aStoryLine.getStoryLineNodeid());
+				        		canvas.aListOfNodes.add(connect);
+				        		canvas.storylineconnection.add(connect);
+				        		
+				                canvas.addShape(aShape);
+				                //canvas.repaint();						
+							}
+						}// end while
 					}
+					else
+					{
+						logger.info("Load from Disk command cancelled by user.");
+					}			
+
 				} catch (Exception e) {
 					System.out.print("parse failed");
 				}
 			}
-					
-//			@Override
-//			public void actionPerformed(ActionEvent pEvent)
-//			{
-//				logger.info("Selected Load from Disk");
-//				JFileChooser aFc = new JFileChooser();
-//				aFc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-//				File location = new File(System.getProperty("user.home"));
-//				
-//				aFc.setCurrentDirectory(location);
-//				int value = aFc.showOpenDialog(lLoaddisk);
-//				if(value == JFileChooser.APPROVE_OPTION)
-//				{
-//					File dataLocation = aFc.getSelectedFile();
-//					// Need to implement.
-//				}
-//				else
-//				{
-//					logger.info("Load from Disk command cancelled by user.");
-//				}
-//			}
 		});
 		aData.add(lLoaddisk);
 		
@@ -282,8 +310,8 @@ public class UserInterface4{
 			public void actionPerformed(ActionEvent pEvent){
 				logger.info("Selected Export");
 				
+				//make the json object list
 				ArrayList<StoryLineNode> aListOfNodes = canvas.aListOfNodes;
-				
 				ArrayList<JSONObject> objectlist = new ArrayList<JSONObject>();
 
 				
@@ -305,8 +333,8 @@ public class UserInterface4{
 						description = m.getDescription();
 						
 						obj.put("class", "mission");
-
 						obj.put("description", description);
+
 						
 
 					}
@@ -316,6 +344,7 @@ public class UserInterface4{
 						top = s.getShape().getTop();
 						
 						obj.put("class", "start");
+
 					}
 					else if(node instanceof EndPoint){
 						EndPoint e = (EndPoint) node;
@@ -323,73 +352,94 @@ public class UserInterface4{
 						top = e.getShape().getTop();
 						
 						obj.put("class", "end");
+
 						
-					}// end
+					}
+					else if (node instanceof StoryLineNodeConnection){
+						StoryLineNodeConnection link = (StoryLineNodeConnection) node;
+						int fromId = link.getSource().getStoryLineNodeid();
+						int toId = link.getTarget().getStoryLineNodeid();
+						
+						int posX = link.getPosition().getX();
+						int posY = link.getPosition().getY();
+						
+//						int p1X = (int)link.getP1().getX();
+//						int p1Y = (int)link.getP1().getY();
+//						
+//						int p2X = (int)link.getP2().getX();
+//						int p2Y = (int)link.getP2().getY();
+						
+						int p1X = (int)link.getShape().getLeft();
+						int p1Y = (int)link.getShape().getTop();
+						
+						int p2X = (int)link.getShape().getWidth();
+						int p2Y = (int)link.getShape().getHeight();
+						
+						obj.put("class", "link");
+						obj.put("fromId",new Integer(fromId));
+						obj.put("toId",new Integer(toId));
+						obj.put("posX",new Integer(posX));
+						obj.put("posY",new Integer(posY));
+						obj.put("p1X",new Integer(p1X));
+						obj.put("p1Y",new Integer(p1Y));
+						obj.put("p2X",new Integer(p2X));
+						obj.put("p2Y",new Integer(p2Y));
+					}
 					
-					
+						
 					//Make the JSON object
 					obj.put("id", new Integer(id));
 					obj.put("left", new Integer (left));
 					obj.put("top", new Integer (top));
 					objectlist.add(obj);
+					
+					//add the node connections
 
 				}// end for of list of nodes
-				
-				try{
-					FileWriter file =  new FileWriter("object.json");
-					for (int midx = 0; midx <objectlist.size();midx++){
-						file.write(objectlist.get(midx).toJSONString()+"\n");
-						file.flush();
+		
+				// file chooser section to save file
+				JFileChooser chooser = new JFileChooser();
+				//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				chooser.setCurrentDirectory(new File("user.home"));
+				int value = chooser.showSaveDialog(lExport);
+				if (value == JFileChooser.APPROVE_OPTION) 
+				{
+					// Need to implement.
+					try
+					{
+						File dataLocation = chooser.getSelectedFile();
+
+						String newPath = dataLocation.getAbsolutePath()+ File.separator;
+						logger.info("Saving User Profile to disk location: " + newPath);
+						
+						String filename = dataLocation.toString();
+						filename = filename.replaceAll(".json", "");
+						
+						FileWriter file =  new FileWriter(filename + ".json");
+						for (int midx = 0; midx <objectlist.size();midx++){
+							file.write(objectlist.get(midx).toJSONString()+"\n");
+							file.flush();
+						}
+						file.close();
+
 					}
-					file.close();
+					catch(NullPointerException e)
+					{
+						logger.warning("Error exporting file.");
+					}
+					catch (IOException e){
+						logger.warning("IOException");
+					}
 					
-				} catch (IOException e){
-					System.out.println("do nothing");
+					File fileToSave = chooser.getCurrentDirectory();
+					logger.info("Save file to " + fileToSave.getAbsolutePath());
 				}
+		        else 
+		        {
+		        	logger.info("Save/Export command cancelled by user.");
+		        }				
 
 			}// end action event
-
-//			@Override
-//			public void actionPerformed(ActionEvent pEvent)
-//			{
-//				logger.info("Selected Export");
-//				JFileChooser aExportChooser = new JFileChooser();
-//				aExportChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//				File location = new File(System.getProperty("user.home"));
-//
-//				aExportChooser.setCurrentDirectory(location);
-//				int value = aExportChooser.showSaveDialog(lExport);
-//				if (value == JFileChooser.APPROVE_OPTION) 
-//				{
-//					// Need to implement.
-//					try
-//					{
-//						File dataLocation = aExportChooser.getSelectedFile();
-//						String newPath = dataLocation.getAbsolutePath()+ File.separator;
-//						logger.info("Saving User Profile to disk location: " + newPath);
-//						for (int j = 0; j < 8; j++)
-//						{
-//							trial = new Integer(8);
-//						}
-//					}
-//					catch(NullPointerException e)
-//					{
-//						logger.warning("Error exporting file.");
-//					}
-//					
-//					Model m = new Model();
-//					m.persist(trial, aExportChooser.getSelectedFile().toString());
-//				    File fileToSave = aExportChooser.getCurrentDirectory();
-//					String aPath = fileToSave.getAbsolutePath();
-//					logger.info("Save file to " + fileToSave.getAbsolutePath());
-//				}
-//		        else 
-//		        {
-//		        	logger.info("Save/Export command cancelled by user.");
-//		        }
-//			}// end of action performed
-			
-			
 		});
 		aData.add(lExport);
 		return aData;
@@ -422,6 +472,9 @@ public class UserInterface4{
 		private Shape highlighted_shape = null;
 		private Color highlighted_color = Color.gray;
 		private Color color_prehighlight = null;
+		
+		int fromID = 0;
+		int toID = 0;
 		
 		ShapeCanvas() {
 			setBackground(Color.white);
@@ -760,15 +813,35 @@ public class UserInterface4{
 	                p1 = evt.getPoint();
 	                System.out.println("P1: " + "("+ p1.x +","+ p1.y + ")" );
 	                aSourcePosition = new Position((int) p1.getX(),(int)p1.getY());	// initial position clicked on
-	                aStoryLineNode1 = new StoryLineNode(aSourcePosition);
+	                
+	                fromID = elementClickedOn.getShapeId();
+	                //System.out.println("LOOK " + fromID);
+	                for (StoryLineNode node : aListOfNodes ){
+	                	if (node.getStoryLineNodeid() == fromID){
+	                		aStoryLineNode1 = node;
+	                		//System.out.println("THIS "+ aStoryLineNode1.getStoryLineNodeid());
+	                	}
+	                }
+	                
+	                //aStoryLineNode1 = new StoryLineNode(aSourcePosition);
 	                elementClickedOn = null;
 	            }
 	            else
-	            {
+	            {            	
+	                toID = elementClickedOn.getShapeId();
+	                //System.out.println("LOOK " + toID);
+	                
+	                for (StoryLineNode node : aListOfNodes ){
+	                	if (node.getStoryLineNodeid() == toID){
+	                		aStoryLineNode2 = node;
+	                		//System.out.println( "THIS "+ aStoryLineNode2.getStoryLineNodeid());
+	                	}
+	                }
+	                
 	                p2 = evt.getPoint();
 	                System.out.println("P2: " + "("+ p2.x +","+ p2.y + ")" );
-	                aTargetPosition = new Position((int) p2.getX(),(int)p2.getY());	// final position clicked on
-	                aStoryLineNode2 = new StoryLineNode(aTargetPosition);
+	                //aTargetPosition = new Position((int) p2.getX(),(int)p2.getY());	// final position clicked on
+	                //aStoryLineNode2 = new StoryLineNode(aTargetPosition);
 	                connectionMade = true;
 	                Shape aShape = new SolidLine((int)p1.getX(),(int)p1.getY(),(int)p2.getX(),(int)p2.getY());
 	        		StoryLineNode aStoryLine = new StoryLineNodeConnection(clickedOn, p1, p2, aShape, aStoryLineNode2, aStoryLineNode1);
