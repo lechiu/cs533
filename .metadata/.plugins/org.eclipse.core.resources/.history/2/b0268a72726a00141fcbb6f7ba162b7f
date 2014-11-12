@@ -86,10 +86,13 @@ class StoryLineNode
 
 class StoryLineNodeConnection
 {
+class StoryLineNodeConnection
+{
 	isA StoryLineNode;
 	Point p1;
 	Point p2;
 	autounique storyLineNodeConnectionId;	
+}
 }
 
 
