@@ -1,0 +1,184 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+
+
+import java.awt.Point;
+import java.util.*;
+
+// line 121 "gameplotconcrete.ump"
+public class StoryLineNodeConnection extends StoryLineNode
+{
+
+  //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static int nextStoryLineNodeConnectionId = 1;
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //StoryLineNodeConnection Attributes
+  private Point p1;
+  private Point p2;
+
+  //Autounique Attributes
+  private int storyLineNodeConnectionId;
+
+  //StoryLineNodeConnection Associations
+  private Shape shape;
+  private StoryLineNode target;
+  private StoryLineNode source;
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public StoryLineNodeConnection(Position aPosition, Point aP1, Point aP2, Shape aShape, StoryLineNode aTarget, StoryLineNode aSource)
+  {
+    super(aPosition);
+    p1 = aP1;
+    p2 = aP2;
+    storyLineNodeConnectionId = nextStoryLineNodeConnectionId++;
+    if (!setShape(aShape))
+    {
+      throw new RuntimeException("Unable to create StoryLineNodeConnection due to aShape");
+    }
+    boolean didAddTarget = setTarget(aTarget);
+    if (!didAddTarget)
+    {
+      throw new RuntimeException("Unable to create predecessor due to target");
+    }
+    boolean didAddSource = setSource(aSource);
+    if (!didAddSource)
+    {
+      throw new RuntimeException("Unable to create successor due to source");
+    }
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public boolean setP1(Point aP1)
+  {
+    boolean wasSet = false;
+    p1 = aP1;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setP2(Point aP2)
+  {
+    boolean wasSet = false;
+    p2 = aP2;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public Point getP1()
+  {
+    return p1;
+  }
+
+  public Point getP2()
+  {
+    return p2;
+  }
+
+  public int getStoryLineNodeConnectionId()
+  {
+    return storyLineNodeConnectionId;
+  }
+
+  public Shape getShape()
+  {
+    return shape;
+  }
+
+  public StoryLineNode getTarget()
+  {
+    return target;
+  }
+
+  public StoryLineNode getSource()
+  {
+    return source;
+  }
+
+  public boolean setShape(Shape aNewShape)
+  {
+    boolean wasSet = false;
+    if (aNewShape != null)
+    {
+      shape = aNewShape;
+      wasSet = true;
+    }
+    return wasSet;
+  }
+
+  public boolean setTarget(StoryLineNode aTarget)
+  {
+    boolean wasSet = false;
+    if (aTarget == null)
+    {
+      return wasSet;
+    }
+
+    StoryLineNode existingTarget = target;
+    target = aTarget;
+    if (existingTarget != null && !existingTarget.equals(aTarget))
+    {
+      existingTarget.removePredecessor(this);
+    }
+    target.addPredecessor(this);
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setSource(StoryLineNode aSource)
+  {
+    boolean wasSet = false;
+    if (aSource == null)
+    {
+      return wasSet;
+    }
+
+    StoryLineNode existingSource = source;
+    source = aSource;
+    if (existingSource != null && !existingSource.equals(aSource))
+    {
+      existingSource.removeSuccessor(this);
+    }
+    source.addSuccessor(this);
+    wasSet = true;
+    return wasSet;
+  }
+
+  public void delete()
+  {
+    shape = null;
+    StoryLineNode placeholderTarget = target;
+    this.target = null;
+    placeholderTarget.removePredecessor(this);
+    StoryLineNode placeholderSource = source;
+    this.source = null;
+    placeholderSource.removeSuccessor(this);
+    super.delete();
+  }
+
+
+  public String toString()
+  {
+	  String outputString = "";
+    return super.toString() + "["+
+            "storyLineNodeConnectionId" + ":" + getStoryLineNodeConnectionId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "p1" + "=" + (getP1() != null ? !getP1().equals(this)  ? getP1().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "p2" + "=" + (getP2() != null ? !getP2().equals(this)  ? getP2().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "shape = "+(getShape()!=null?Integer.toHexString(System.identityHashCode(getShape())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "target = "+(getTarget()!=null?Integer.toHexString(System.identityHashCode(getTarget())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "source = "+(getSource()!=null?Integer.toHexString(System.identityHashCode(getSource())):"null")
+     + outputString;
+  }
+}

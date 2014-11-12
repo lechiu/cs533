@@ -33,6 +33,7 @@ public class OvalShape extends Shape
   }
 
   // line 135 "gameplotconcrete.ump"
+//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
   public void draw(Graphics g){
     g.setColor(Color.black);
 		g.fillOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
@@ -40,9 +41,9 @@ public class OvalShape extends Shape
   }
 
   // line 141 "gameplotconcrete.ump"
+//Check whether (x,y) is inside this oval
+//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
   public boolean containsPoint(int x, int y){
-    // Check whether (x,y) is inside this oval, using the
-	// mathematical equation of an ellipse.
 	double rx = this.getWidth()/2.0;   // horizontal radius of ellipse
 	double ry = this.getHeight()/2.0;  // vertical radius of ellipse 
 	double cx = this.getLeft() + rx;   // x-coord of center of ellipse
