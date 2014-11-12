@@ -3,26 +3,26 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="263" key="DIALOG_WIDTH"/>
 		<item value="123" key="DIALOG_Y_ORIGIN"/>
-		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="508" key="DIALOG_X_ORIGIN"/>
+		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Mission" key="selection"/>
+		<item value="addShape" key="selection"/>
 		<list key="findhistory">
-			<item value="Mission"/>
-			<item value="StoryLineNodeC"/>
-			<item value="StoryLineNo"/>
-			<item value="BarOrthonanolLine"/>
-			<item value="BarOrthonanoLine"/>
-			<item value="Bar"/>
-			<item value="BarOrtha"/>
-			<item value="aPos2"/>
+			<item value="addShape"/>
+			<item value="paintComp"/>
+			<item value="mousePressed"/>
+			<item value="shapeBeingDragg"/>
+			<item value="shapeDragg"/>
+			<item value="ShapeDragg"/>
+			<item value="ShapeDra"/>
+			<item value="shapeDra"/>
 		</list>
 		<list key="replacehistory">
 			<item value="BarOrthogonalLine"/>
