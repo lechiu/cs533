@@ -419,6 +419,9 @@ public class UserInterface4{
 		Position clickedOn = null;
 		Position aSourcePosition = null;
 		Position aTargetPosition = null;
+		private Shape highlighted_shape = null;
+		private Color highlighted_color = Color.gray;
+		private Color color_prehighlight = null;
 		
 		ShapeCanvas() {
 			setBackground(Color.white);
@@ -713,7 +716,20 @@ public class UserInterface4{
 				Shape s = (Shape) shapes.get(i);
 				if (s.containsPoint(x, y)) {
 					elementClickedOn = s;	// Set element clicked on
+					
+					
+					if(this.highlighted_shape != null){
+						this.highlighted_shape.setColor(this.color_prehighlight);						
+					}
+					this.highlighted_shape = s;
+					this.color_prehighlight = this.highlighted_shape.getColor();
+					this.highlighted_shape.setColor(this.highlighted_color);
+					s.draw(this.getGraphics());
+					
+					
 					System.out.println(elementClickedOn.getClass().getSimpleName());
+					//repaint();
+					break;
 				}
 			}
 						
