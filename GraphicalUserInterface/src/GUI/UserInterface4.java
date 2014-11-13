@@ -483,7 +483,8 @@ public class UserInterface4{
 		}
 		private boolean highlight(Shape s){			
 			if(this.highlighted_shape != null){
-				this.highlighted_shape.setColor(this.color_prehighlight);						
+				this.highlighted_shape.setColor(this.color_prehighlight);
+				this.highlighted_shape.draw(this.getGraphics());
 			}
 			this.highlighted_shape = s;
 			this.color_prehighlight = this.highlighted_shape.getColor();
