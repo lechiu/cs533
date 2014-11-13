@@ -566,7 +566,7 @@ public class UserInterface4{
 	        	}
 	        	else if (command.equals("End Point"))
 	        	{
-	        		Shape aShape = new RectShape(10, 10, 10, 30);
+	        		Shape aShape = new RectShape(10, 10, 10, 50);
 	        		StoryLineNode aStoryEndPoint = new EndPoint(aInitializing, aShape);
 	        		EndPoint aEndPoint = (EndPoint) aStoryEndPoint;
 	        		aEndPoint.getShape().setShapeId(aStoryEndPoint.getStoryLineNodeid());
