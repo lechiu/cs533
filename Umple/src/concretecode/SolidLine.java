@@ -56,10 +56,30 @@ public class SolidLine extends Shape
   @Override
   public boolean containsPoint(int x, int y){
     //	  	if (x >= this.getLeft() && x < this.getLeft() + 10 && y >= this.getTop() && y < this.getTop() + 10)
-	  	if ((x >= this.getLeft() - 10 && x <= this.getLeft() + 10 && y >= this.getTop() - 10 && y <= this.getTop() + 10) || (x >= this.getWidth() - 10 && x <= this.getWidth() + 10 && y >= this.getHeight() - 10 && y <= this.getHeight() + 10))
+
+		int x1 = this.getLeft();
+		int y1 = this.getTop();
+		int x2 = this.getWidth();
+		int y2 = this.getHeight();
+		
+		double ydiff = (y2 - y1);
+		double xdiff = (x2 - x1);
+		if (xdiff == 0) {
+			xdiff = +1;
+		}
+		double slope = (ydiff / xdiff);
+		double b = y2 - slope * x2;
+
+		int ymax = (int) (slope * x + b) + 5;
+		int ymin = (int) (slope * x + b) - 5;
+
+		if ((x <= Math.max(x1, x2)) && (x >= Math.min(x1, x2)) && (y <= ymax)
+				&& (y >= ymin))
 			return true;
 		else
 			return false;
+	  
+	  
   }
 
 
