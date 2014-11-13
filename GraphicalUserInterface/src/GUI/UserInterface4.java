@@ -771,7 +771,8 @@ public class UserInterface4{
 		public void mouseDragged(MouseEvent evt) {
 			int x = evt.getX();
 			int y = evt.getY();
-			if ((shapeDrag != null)&&!(shapeDrag instanceof SolidLine)) {
+			boolean inside_the_box = (x >= 0)&&(x <= this.getWidth())&&(y >= 0)&&(y <= getHeight());
+			if (inside_the_box && (shapeDrag != null)&&!(shapeDrag instanceof SolidLine)) {
 				shapeDrag.moveBy(x - oldPositionX, y - oldPositionY);
 				oldPositionX = x;
 				oldPositionY = y;
