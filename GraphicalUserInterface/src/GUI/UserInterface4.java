@@ -481,6 +481,15 @@ public class UserInterface4{
 			addMouseListener(this);
 			addMouseMotionListener(this);
 		}
+		private boolean highlight(Shape s){			
+			if(this.highlighted_shape != null){
+				this.highlighted_shape.setColor(this.color_prehighlight);						
+			}
+			this.highlighted_shape = s;
+			this.color_prehighlight = this.highlighted_shape.getColor();
+			this.highlighted_shape.setColor(this.highlighted_color);
+			return true;
+		}
 		
 		// Draw the canvas, then draw every shape in the shapes list.
 		public void paintComponent(Graphics g) {
@@ -769,14 +778,7 @@ public class UserInterface4{
 				Shape s = (Shape) shapes.get(i);
 				if (s.containsPoint(x, y)) {
 					elementClickedOn = s;	// Set element clicked on
-					
-					
-					if(this.highlighted_shape != null){
-						this.highlighted_shape.setColor(this.color_prehighlight);						
-					}
-					this.highlighted_shape = s;
-					this.color_prehighlight = this.highlighted_shape.getColor();
-					this.highlighted_shape.setColor(this.highlighted_color);
+					this.highlight(s);
 					s.draw(this.getGraphics());
 					
 					

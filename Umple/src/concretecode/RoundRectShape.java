@@ -35,7 +35,7 @@ public class RoundRectShape extends Shape
   // line 207 "gameplotconcrete.ump"
 //Adapted from: David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
   public void draw(Graphics g){
-    g.setColor(Color.black);
+    g.setColor(super.getColor());
 		g.fillRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);
 		g.drawRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);
 		g.drawString("M", this.getLeft(), this.getTop());

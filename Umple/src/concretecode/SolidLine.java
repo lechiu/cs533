@@ -27,25 +27,11 @@ public class SolidLine extends Shape
   public SolidLine(int aLeft, int aTop, int aWidth, int aHeight)
   {
     super(aLeft, aTop, aWidth, aHeight);
-    aColor = Color.black;
   }
 
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setAColor(Color aAColor)
-  {
-    boolean wasSet = false;
-    aColor = aAColor;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public Color getAColor()
-  {
-    return aColor;
-  }
 
   public void delete()
   {
@@ -56,7 +42,7 @@ public class SolidLine extends Shape
   public void draw(Graphics g){
     Graphics2D g2 = (Graphics2D) g.create();
       	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      	g2.setColor(Color.BLACK);
+      	g2.setColor(super.getColor());
       	g2.setStroke(new BasicStroke(8));
       	g2.fillRect(2,2,2,2);
 	  	g2.drawLine(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
@@ -80,8 +66,6 @@ public class SolidLine extends Shape
   public String toString()
   {
 	  String outputString = "";
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "aColor" + "=" + (getAColor() != null ? !getAColor().equals(this)  ? getAColor().toString().replaceAll("  ","    ") : "this" : "null")
-     + outputString;
+    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") + outputString;
   }
 }

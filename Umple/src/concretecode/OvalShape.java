@@ -35,7 +35,7 @@ public class OvalShape extends Shape
   // line 135 "gameplotconcrete.ump"
 //David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
   public void draw(Graphics g){
-    g.setColor(Color.black);
+    g.setColor(super.getColor());
 		g.fillOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
 		g.drawOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
   }

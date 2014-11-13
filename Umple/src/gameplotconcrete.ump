@@ -46,7 +46,7 @@ class RectShape
 	depend java.awt.Graphics;
 	isA Shape;
 	void draw(Graphics g) {
-		g.setColor(Color.black);
+		g.setColor(super.getColor());
 		g.fillRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
 		g.drawRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
   	}
@@ -132,7 +132,7 @@ class OvalShape
 	depend java.awt.Graphics;
 	isA Shape;
 	void draw(Graphics g) {
-		g.setColor(Color.black);
+		g.setColor(super.getColor());
 		g.fillOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
 		g.drawOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
   	}
@@ -189,7 +189,7 @@ class RoundRectShape{
 	
 	isA Shape;
 	void draw(Graphics g) {
-		g.setColor(Color.black);
+		g.setColor(super.getColor());
 		g.fillRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);
 		g.drawRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);
 		g.drawString("M", this.getLeft(), this.getTop());
@@ -213,11 +213,10 @@ class SolidLine{
 	depend java.awt.Graphics2D;
 	depend java.awt.RenderingHints;
 	isA Shape;
-	Color aColor = Color.black;
 	void draw(Graphics g){
 	  	Graphics2D g2 = (Graphics2D) g.create();
       	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      	g2.setColor(Color.BLACK);
+      	g2.setColor(super.getColor());
       	g2.setStroke(new BasicStroke(8));
       	g2.fillRect(2,2,2,2);
 	  	g2.drawLine(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
