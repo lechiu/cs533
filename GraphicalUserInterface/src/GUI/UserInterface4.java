@@ -498,6 +498,8 @@ public class UserInterface4{
 			s.setColor(this.color_prehighlight);
 			this.highlighted_shape = null;
 			s.draw(this.getGraphics());
+			
+			repaint();
 			return true;
 		}
 		// Draw the canvas, then draw every shape in the shapes list.
@@ -812,6 +814,7 @@ public class UserInterface4{
 			}
 			
 			System.out.println("Link On in MouseClicked Method = " + linkOn);
+			repaint();
 			if(linkOn && elementClickedOn != null)
 			{
 				// Drawing line
@@ -975,6 +978,7 @@ public class UserInterface4{
 		@Override
 		public void mouseReleased(MouseEvent evt) {
 			this.shapeDrag = null;
+			repaint();
 		}
 		
 	}// end shapecanvas

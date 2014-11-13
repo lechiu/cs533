@@ -1,0 +1,70 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.21.0.4666 modeling language!*/
+
+
+
+// line 199 "gameplotconcrete.ump"
+public class BlackTriangle
+{
+
+  //------------------------
+  // MEMBER VARIABLES
+  //------------------------
+
+  //BlackTriangle Attributes
+  private int size;
+  private String colour;
+
+  //------------------------
+  // CONSTRUCTOR
+  //------------------------
+
+  public BlackTriangle(int aSize)
+  {
+    size = aSize;
+    colour = "black";
+  }
+
+  //------------------------
+  // INTERFACE
+  //------------------------
+
+  public boolean setSize(int aSize)
+  {
+    boolean wasSet = false;
+    size = aSize;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setColour(String aColour)
+  {
+    boolean wasSet = false;
+    colour = aColour;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public int getSize()
+  {
+    return size;
+  }
+
+  public String getColour()
+  {
+    return colour;
+  }
+
+  public void delete()
+  {}
+
+
+  public String toString()
+  {
+	  String outputString = "";
+    return super.toString() + "["+
+            "size" + ":" + getSize()+ "," +
+            "colour" + ":" + getColour()+ "]"
+     + outputString;
+  }
+}
