@@ -277,6 +277,7 @@ public class UserInterface4{
 				                		n2 = node;
 				                	}
 				                }
+				                
 				                Shape aShape = new SolidLine(p1X,p1Y,p2X,p2Y);
 				                StoryLineNode aStoryLine = new StoryLineNodeConnection (nodePos, point1, point2, aShape,n2,n1);
 				                StoryLineNodeConnection connect = (StoryLineNodeConnection) aStoryLine;
@@ -475,6 +476,10 @@ public class UserInterface4{
 		
 		int fromID = 0;
 		int toID = 0;
+		int s1x = 0;
+		int s1y = 0;
+		int s2x = 0;
+		int s2y = 0;
 		
 		ShapeCanvas() {
 			setBackground(Color.white);
@@ -766,10 +771,32 @@ public class UserInterface4{
 		public void mouseDragged(MouseEvent evt) {
 			int x = evt.getX();
 			int y = evt.getY();
-			if (shapeDrag != null) {
+			if ((shapeDrag != null)&&!(shapeDrag instanceof SolidLine)) {
 				shapeDrag.moveBy(x - oldPositionX, y - oldPositionY);
 				oldPositionX = x;
 				oldPositionY = y;
+				
+				//for cosmetic purposes so that the line is centered to the middle of the node
+				int centerX = shapeDrag.getLeft() + shapeDrag.getWidth()/2;
+				int centerY = shapeDrag.getTop() + shapeDrag.getHeight()/2;
+				
+				//drag line with it
+				for(StoryLineNodeConnection con : storylineconnection){
+					StoryLineNode fromNode = con.getSource();
+					StoryLineNode toNode = con.getTarget();
+					
+					if(shapeDrag.getShapeId() == fromNode.getStoryLineNodeid()){
+						con.getShape().setLeft(centerX);
+						con.getShape().setTop(centerY);
+					}
+					else if (shapeDrag.getShapeId() == toNode.getStoryLineNodeid()){
+						con.getShape().setWidth(centerX);
+						con.getShape().setHeight(centerY);
+					}
+				}
+				
+				
+				
 				repaint();
 			}
 		}
@@ -838,6 +865,8 @@ public class UserInterface4{
 	                	}
 	                }
 	                
+	                s1x =  elementClickedOn.getLeft() + elementClickedOn.getWidth()/2;
+	                s1y =  elementClickedOn.getTop() + elementClickedOn.getHeight()/2;
 	                //aStoryLineNode1 = new StoryLineNode(aSourcePosition);
 	                elementClickedOn = null;
 	            }
@@ -852,13 +881,16 @@ public class UserInterface4{
 	                		//System.out.println( "THIS "+ aStoryLineNode2.getStoryLineNodeid());
 	                	}
 	                }
+	                s2x =  elementClickedOn.getLeft() + elementClickedOn.getWidth()/2;
+	                s2y =  elementClickedOn.getTop() + elementClickedOn.getHeight()/2;
 	                
 	                p2 = evt.getPoint();
 	                System.out.println("P2: " + "("+ p2.x +","+ p2.y + ")" );
 	                //aTargetPosition = new Position((int) p2.getX(),(int)p2.getY());	// final position clicked on
 	                //aStoryLineNode2 = new StoryLineNode(aTargetPosition);
 	                connectionMade = true;
-	                Shape aShape = new SolidLine((int)p1.getX(),(int)p1.getY(),(int)p2.getX(),(int)p2.getY());
+	                Shape aShape = new SolidLine(s1x,s1y,s2x,s2y);
+	                s1x = s1y = s2x = s2y = 0;
 	        		StoryLineNode aStoryLine = new StoryLineNodeConnection(clickedOn, p1, p2, aShape, aStoryLineNode2, aStoryLineNode1);
 	        		StoryLineNodeConnection connect = (StoryLineNodeConnection) aStoryLine;
 	        		connect.getShape().setShapeId(aStoryLine.getStoryLineNodeid());
