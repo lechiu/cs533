@@ -823,9 +823,14 @@ public class UserInterface4{
 					
 					System.out.println(elementClickedOn.getClass().getSimpleName());
 					//repaint();
+					
 					break;
 				}
 			}
+			if (elementClickedOn instanceof SolidLine){
+				linkOn = false; // prevent connecting to solid lines
+			}
+			
 			if(!flag_click_on_shape){
 				this.unhighlight();
 				linkOn = false;
@@ -846,8 +851,11 @@ public class UserInterface4{
 			
 			System.out.println("Link On in MouseClicked Method = " + linkOn);
 			repaint();
+			
+
 			if(linkOn && elementClickedOn != null)
 			{
+				
 				// Drawing line
 				System.out.println("Line drawn: " + lineDrawn);
 	            if(p1 == null || lineDrawn){
@@ -875,7 +883,7 @@ public class UserInterface4{
 	                elementClickedOn = null;
 	            }
 	            else
-	            {            	
+	            {   
 	                toID = elementClickedOn.getShapeId();
 	                //System.out.println("LOOK " + toID);
 	                
@@ -918,7 +926,8 @@ public class UserInterface4{
 	        		aStoryLineNode1 = null;
 	        		aStoryLineNode2 = null;
 	        	}
-			}
+			}// end if
+
 			
 			Shape aShape = null;
 			String classname = "";
