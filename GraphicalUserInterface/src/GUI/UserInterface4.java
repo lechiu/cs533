@@ -240,7 +240,7 @@ public class UserInterface4{
 				        		canvas.p1 = null;
 							}
 							else if (type.equals("end")){
-								Shape aShape = new RectShape(left, top, 10, 30);
+								Shape aShape = new RectShape(left, top, 10, 50);
 				        		StoryLineNode aStoryEndPoint = new EndPoint(aInitializing, aShape);
 				        		aStoryEndPoint.setStoryLineNodeid(id);
 				        		EndPoint aEndPoint = (EndPoint) aStoryEndPoint;
@@ -826,7 +826,10 @@ public class UserInterface4{
 					break;
 				}
 			}
-			if(!flag_click_on_shape)this.unhighlight();
+			if(!flag_click_on_shape){
+				this.unhighlight();
+				linkOn = false;
+			}
 						
 			if (shapeDrag != null) {
 				shapeDrag.moveBy(x - oldPositionX, y - oldPositionY);
