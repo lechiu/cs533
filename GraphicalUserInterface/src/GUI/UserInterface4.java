@@ -944,8 +944,9 @@ public class UserInterface4{
 				Shape s = (Shape) shapes.get(i);
 				if (s.containsPoint(x, y)) 
 				{
-					System.out.println(s.getClass().getSimpleName());
+					System.out.println("press "+s.getClass().getSimpleName());
 					shapeDrag = s;
+					this.highlight(s);
 					oldPositionX = x;
 					oldPositionY = y;
 //					if (evt.isShiftDown())
