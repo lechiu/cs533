@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 // line 160 "gameplotconcrete.ump"
+//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
 public class Shape
 {
 
@@ -121,12 +122,16 @@ public class Shape
   {}
 
   // line 172 "gameplotconcrete.ump"
+//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
+  // Move shape by x and y lengths  
   public void moveBy(int dx, int dy){
     left = left + dx;
 	    top = top + dy;
   }
 
   // line 177 "gameplotconcrete.ump"
+  //David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
+  // Check whether the shape contains the point (x,y).
   public boolean containsPoint(int x, int y){
     if (x >= left && x < left+width && y >= top && y < top+height)
 			return true;
