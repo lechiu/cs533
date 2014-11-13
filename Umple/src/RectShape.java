@@ -32,6 +32,7 @@ public class RectShape extends Shape
   }
 
   // line 49 "gameplotconcrete.ump"
+//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014  
   public void draw(Graphics g){
     g.setColor(super.getColor());
 		g.fillRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
