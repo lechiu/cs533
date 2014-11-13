@@ -123,7 +123,8 @@ class StoryLineNodeConnection
 	1 StoryLineNodeConnection -> 1 Shape;
 	Point p1;
 	Point p2;
-	autounique storyLineNodeConnectionId;	
+	Integer storyLineNodeConnectionId;	
+	
 }
 
 class OvalShape
