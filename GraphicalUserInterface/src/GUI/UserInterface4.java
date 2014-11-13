@@ -887,6 +887,12 @@ public class UserInterface4{
 	                toID = elementClickedOn.getShapeId();
 	                //System.out.println("LOOK " + toID);
 	                
+	                // prevent node from linking to it self
+	                if(toID == fromID){
+	                	linkOn = false;
+	                	return;
+	                }
+	                
 	                for (StoryLineNode node : aListOfNodes ){
 	                	if (node.getStoryLineNodeid() == toID){
 	                		aStoryLineNode2 = node;
@@ -922,6 +928,7 @@ public class UserInterface4{
 	        	// Reset both storyline nodes to null and connectionMade to false;
 	        	if(connectionMade)
 	        	{
+	        		System.out.println("Link made between id " + aStoryLineNode1.getStoryLineNodeid() + " to " + aStoryLineNode2.getStoryLineNodeid());
 	        		connectionMade = false;
 	        		aStoryLineNode1 = null;
 	        		aStoryLineNode2 = null;
