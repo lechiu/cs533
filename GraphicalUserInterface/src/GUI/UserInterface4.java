@@ -488,9 +488,17 @@ public class UserInterface4{
 			this.highlighted_shape = s;
 			this.color_prehighlight = this.highlighted_shape.getColor();
 			this.highlighted_shape.setColor(this.highlighted_color);
+			this.highlighted_shape.draw(this.getGraphics());
 			return true;
 		}
-		
+		private boolean unhighlight(){
+			Shape s = this.highlighted_shape;
+			if(s==null)return true;
+			s.setColor(this.color_prehighlight);
+			this.highlighted_shape = null;
+			s.draw(this.getGraphics());
+			return true;
+		}
 		// Draw the canvas, then draw every shape in the shapes list.
 		public void paintComponent(Graphics g) {
 			g.setColor(getBackground());
@@ -774,19 +782,20 @@ public class UserInterface4{
 			int y = evt.getY();
 			clickedOn = new Position(x, y);
 			// Set elementClickedOn to the shape you clicked on at that point, if any.
+			boolean flag_click_on_shape = false;
 			for (int i = shapes.size() - 1; i >= 0; i--) { // check shapes from front to back
 				Shape s = (Shape) shapes.get(i);
 				if (s.containsPoint(x, y)) {
 					elementClickedOn = s;	// Set element clicked on
 					this.highlight(s);
-					s.draw(this.getGraphics());
-					
+					flag_click_on_shape = true;
 					
 					System.out.println(elementClickedOn.getClass().getSimpleName());
 					//repaint();
 					break;
 				}
 			}
+			if(!flag_click_on_shape)this.unhighlight();
 						
 			if (shapeDrag != null) {
 				shapeDrag.moveBy(x - oldPositionX, y - oldPositionY);
