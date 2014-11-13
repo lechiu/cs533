@@ -473,7 +473,7 @@ public class UserInterface4{
 		private Shape highlighted_shape = null;
 		private Color highlighted_color = Color.gray;
 		private Color color_prehighlight = null;
-		
+		private SolidLine fake_line = null;
 		int fromID = 0;
 		int toID = 0;
 		int s1x = 0;
@@ -518,6 +518,7 @@ public class UserInterface4{
 				Shape s = (Shape) shapes.get(i);
 				s.draw(g);
 			}
+			if(this.fake_line!=null)this.fake_line.draw(g);
 			System.out.println("number of shapes: " + top);
 		}
 		
@@ -852,7 +853,7 @@ public class UserInterface4{
 			System.out.println("Link On in MouseClicked Method = " + linkOn);
 			repaint();
 			
-
+			this.fake_line = null;
 			if(linkOn && elementClickedOn != null)
 			{
 				
@@ -881,6 +882,8 @@ public class UserInterface4{
 	                s1y =  elementClickedOn.getTop() + elementClickedOn.getHeight()/2;
 	                //aStoryLineNode1 = new StoryLineNode(aSourcePosition);
 	                elementClickedOn = null;
+	                this.fake_line = new SolidLine(s1x,s1y,x,y);
+	                this.fake_line.setColor(Color.darkGray);
 	            }
 	            else
 	            {   
@@ -921,6 +924,7 @@ public class UserInterface4{
 	                addShape(aShape);
 	    			linkOn = false;				// set linkOn to false because line is already drawn
 	    			lineDrawn = true; 			// set lineDrawn to true to indicate line was drawn
+	    			
 	    			repaint();
 	            }
 	            
@@ -1019,7 +1023,15 @@ public class UserInterface4{
 		}
 
 		@Override
-		public void mouseMoved(MouseEvent evt) {}
+		public void mouseMoved(MouseEvent evt) {
+			if(this.fake_line!=null){
+				int x = evt.getX();
+				int y = evt.getY();
+				this.fake_line.setWidth(x);
+				this.fake_line.setHeight(y);
+				this.repaint();
+			}
+		}
 		
 		@Override
 		public void mouseEntered(MouseEvent evt) {}
