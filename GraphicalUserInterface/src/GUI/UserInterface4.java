@@ -973,6 +973,7 @@ public class UserInterface4{
 		
 		@Override
 		public void mouseReleased(MouseEvent evt) {
+			this.shapeDrag = null;
 		}
 		
 	}// end shapecanvas
