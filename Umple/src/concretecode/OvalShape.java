@@ -1,12 +1,12 @@
 package concretecode;
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+/*This code was generated using the UMPLE 1.21.0.4666 modeling language!*/
 
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-// line 129 "gameplotconcrete.ump"
+// line 134 "gameplotconcrete.ump"
 public class OvalShape extends Shape
 {
 
@@ -32,18 +32,17 @@ public class OvalShape extends Shape
     super.delete();
   }
 
-  // line 135 "gameplotconcrete.ump"
-//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
+  // line 140 "gameplotconcrete.ump"
   public void draw(Graphics g){
     g.setColor(super.getColor());
 		g.fillOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
 		g.drawOval(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
   }
 
-  // line 141 "gameplotconcrete.ump"
-//Check whether (x,y) is inside this oval
-//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
+  // line 146 "gameplotconcrete.ump"
   public boolean containsPoint(int x, int y){
+    // Check whether (x,y) is inside this oval, using the
+	// mathematical equation of an ellipse.
 	double rx = this.getWidth()/2.0;   // horizontal radius of ellipse
 	double ry = this.getHeight()/2.0;  // vertical radius of ellipse 
 	double cx = this.getLeft() + rx;   // x-coord of center of ellipse

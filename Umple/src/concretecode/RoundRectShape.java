@@ -1,12 +1,12 @@
 package concretecode;
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+/*This code was generated using the UMPLE 1.21.0.4666 modeling language!*/
 
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-// line 201 "gameplotconcrete.ump"
+// line 191 "gameplotconcrete.ump"
 public class RoundRectShape extends Shape
 {
 
@@ -32,8 +32,7 @@ public class RoundRectShape extends Shape
     super.delete();
   }
 
-  // line 207 "gameplotconcrete.ump"
-//Adapted from: David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
+  // line 197 "gameplotconcrete.ump"
   public void draw(Graphics g){
     g.setColor(super.getColor());
 		g.fillRoundRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight(),this.getWidth()/3,this.getHeight()/3);

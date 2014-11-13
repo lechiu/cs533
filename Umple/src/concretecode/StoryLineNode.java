@@ -1,6 +1,6 @@
 package concretecode;
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+/*This code was generated using the UMPLE 1.21.0.4666 modeling language!*/
 
 
 import java.awt.Point;
@@ -47,12 +47,6 @@ public class StoryLineNode
   // INTERFACE
   //------------------------
 
-  //added set method robin
-  public void setStoryLineNodeid(int id)
-  {
-	  storyLineNodeid = id;
-  }
-  
   public int getStoryLineNodeid()
   {
     return storyLineNodeid;
@@ -311,6 +305,11 @@ public class StoryLineNode
       aSuccessor.delete();
     }
     position = null;
+  }
+
+  // line 120 "gameplotconcrete.ump"
+  public void setStoryLineNodeid(int id){
+    storyLineNodeid = id;
   }
 
 

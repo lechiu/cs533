@@ -1,6 +1,6 @@
 package concretecode;
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+/*This code was generated using the UMPLE 1.21.0.4666 modeling language!*/
 
 
 import java.awt.BasicStroke;
@@ -9,16 +9,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-// line 224 "gameplotconcrete.ump"
+// line 214 "gameplotconcrete.ump"
 public class SolidLine extends Shape
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
-
-  //SolidLine Attributes
-  private Color aColor;
 
   //------------------------
   // CONSTRUCTOR
@@ -38,7 +35,7 @@ public class SolidLine extends Shape
     super.delete();
   }
 
-  // line 233 "gameplotconcrete.ump"
+  // line 222 "gameplotconcrete.ump"
   public void draw(Graphics g){
     Graphics2D g2 = (Graphics2D) g.create();
       	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -52,12 +49,9 @@ public class SolidLine extends Shape
   /**
    * Check whether (x,y) is inside the first point of line.
    */
-  // line 243 "gameplotconcrete.ump"
-  @Override
+  // line 232 "gameplotconcrete.ump"
   public boolean containsPoint(int x, int y){
-    //	  	if (x >= this.getLeft() && x < this.getLeft() + 10 && y >= this.getTop() && y < this.getTop() + 10)
-
-		int x1 = this.getLeft();
+    int x1 = this.getLeft();
 		int y1 = this.getTop();
 		int x2 = this.getWidth();
 		int y2 = this.getHeight();
@@ -78,14 +72,6 @@ public class SolidLine extends Shape
 			return true;
 		else
 			return false;
-	  
-	  
   }
 
-
-  public String toString()
-  {
-	  String outputString = "";
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") + outputString;
-  }
 }

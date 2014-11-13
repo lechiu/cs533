@@ -829,11 +829,14 @@ public class UserInterface4{
 			}
 			if (elementClickedOn instanceof SolidLine){
 				linkOn = false; // prevent connecting to solid lines
+				p1 = null;
 			}
 			
 			if(!flag_click_on_shape){
 				this.unhighlight();
+				elementClickedOn = null;
 				linkOn = false;
+				p1 = null;
 			}
 						
 			if (shapeDrag != null) {
@@ -852,6 +855,7 @@ public class UserInterface4{
 			System.out.println("Link On in MouseClicked Method = " + linkOn);
 			repaint();
 			
+
 
 			if(linkOn && elementClickedOn != null)
 			{
@@ -884,7 +888,7 @@ public class UserInterface4{
 	            }
 	            else
 	            {   
-	                toID = elementClickedOn.getShapeId();
+	            	toID = elementClickedOn.getShapeId();
 	                //System.out.println("LOOK " + toID);
 	                
 	                // prevent node from linking to it self
@@ -922,6 +926,7 @@ public class UserInterface4{
 	    			linkOn = false;				// set linkOn to false because line is already drawn
 	    			lineDrawn = true; 			// set lineDrawn to true to indicate line was drawn
 	    			repaint();
+	    			//firstclicklink = true;
 	            }
 	            
 	        	System.out.println("Connection made: " + connectionMade);
@@ -1005,6 +1010,11 @@ public class UserInterface4{
 					this.highlight(s);
 					oldPositionX = x;
 					oldPositionY = y;
+					
+					if (s instanceof SolidLine){
+						linkOn = false; // just in case
+					}
+
 //					if (evt.isShiftDown())
 //					{ 										// Bring the shape to the front by
 //															// moving it to

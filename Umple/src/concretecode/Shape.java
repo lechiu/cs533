@@ -1,13 +1,12 @@
 package concretecode;
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+/*This code was generated using the UMPLE 1.21.0.4666 modeling language!*/
 
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-// line 160 "gameplotconcrete.ump"
-//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
+// line 165 "gameplotconcrete.ump"
 public class Shape
 {
 
@@ -122,25 +121,21 @@ public class Shape
   public void delete()
   {}
 
-  // line 180 "gameplotconcrete.ump"
-//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
-  // Move shape by x and y lengths
+  // line 177 "gameplotconcrete.ump"
   public void moveBy(int dx, int dy){
-	    left = left + dx;
+    left = left + dx;
 	    top = top + dy;
   }
 
-  // line 187 "gameplotconcrete.ump"
-//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014
-  // Check whether the shape contains the point (x,y).
+  // line 182 "gameplotconcrete.ump"
   public boolean containsPoint(int x, int y){
-		if (x >= left && x < left+width && y >= top && y < top+height)
+    if (x >= left && x < left+width && y >= top && y < top+height)
 			return true;
 		else
 			return false;
   }
 
-  // line 198 "gameplotconcrete.ump"
+  // line 188 "gameplotconcrete.ump"
   public void draw(Graphics g){
     
   }

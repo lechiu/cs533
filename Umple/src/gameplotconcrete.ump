@@ -113,7 +113,12 @@ class StoryLineNode
 	1 source -- * StoryLineNodeConnection successor;
 	1  -> 1 Position;
     1 -> Label;
-	Integer storyLineNodeid;
+	autounique storyLineNodeid;
+
+   void setStoryLineNodeid(int id)
+  {
+	  storyLineNodeid = id;
+  }
 }
 
 class StoryLineNodeConnection
@@ -224,7 +229,7 @@ class SolidLine{
   	
   	// Check whether (x,y) is inside the first point of line.
 	boolean containsPoint(int x, int y){
-//	  	int x1 = this.getLeft();
+	  	int x1 = this.getLeft();
 		int y1 = this.getTop();
 		int x2 = this.getWidth();
 		int y2 = this.getHeight();

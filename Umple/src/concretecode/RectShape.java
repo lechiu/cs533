@@ -1,6 +1,6 @@
 package concretecode;
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.2.4305 modeling language!*/
+/*This code was generated using the UMPLE 1.21.0.4666 modeling language!*/
 
 
 import java.awt.Color;
@@ -33,7 +33,6 @@ public class RectShape extends Shape
   }
 
   // line 49 "gameplotconcrete.ump"
-//David Eck, http://math.hws.edu/eck/cs124/javanotes3/source/ShapeDraw.java, Accessed: 8, November, 2014  
   public void draw(Graphics g){
     g.setColor(super.getColor());
 		g.fillRect(this.getLeft(),this.getTop(),this.getWidth(),this.getHeight());
